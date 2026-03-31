@@ -1,0 +1,12 @@
+{
+  "name": "@archiq/db",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "scripts": {
+    "db:push": "prisma db push",
+    "db:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.6.0"
+  }
+}
