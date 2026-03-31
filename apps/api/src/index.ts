@@ -52,10 +52,12 @@ start();
 
 process.on("SIGINT", async () => {
   await app.close();
+  app.log.info("Server closed");
   process.exit(0);
 });
 
 process.on("SIGTERM", async () => {
   await app.close();
+  app.log.info("Server closed");
   process.exit(0);
 });
