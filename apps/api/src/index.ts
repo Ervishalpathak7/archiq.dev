@@ -1,15 +1,8 @@
-import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
-
+import "./lib/env.js";
 import Fastify, { type FastifyError } from "fastify";
 import cors from "@fastify/cors";
 import jwt from "@fastify/jwt";
+import { designRoutes } from "./routes/design.routes.js";
 
 const app = Fastify({
   logger: {
@@ -37,6 +30,7 @@ app.setErrorHandler((error: FastifyError, _, reply) => {
 app.get("/health", async () => {
   return { status: "ok" };
 });
+app.register(designRoutes);
 
 // Start server
 const start = async () => {
