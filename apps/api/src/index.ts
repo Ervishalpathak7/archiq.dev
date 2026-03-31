@@ -49,3 +49,13 @@ const start = async () => {
 };
 
 start();
+
+process.on("SIGINT", async () => {
+  await app.close();
+  process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+  await app.close();
+  process.exit(0);
+});
