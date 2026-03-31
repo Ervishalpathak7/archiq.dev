@@ -1,7 +1,8 @@
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthResult } from "next-auth";
 import Google from "next-auth/providers/google";
-
-export const { handlers, signIn, signOut, auth } = NextAuth({
+console.log("CLIENT ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("CLIENT SECRET:", process.env.GOOGLE_CLIENT_SECRET);
+const nextAuth = NextAuth({
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -20,3 +21,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
+
+export const handlers: NextAuthResult["handlers"] = nextAuth.handlers;
+export const signIn: NextAuthResult["signIn"] = nextAuth.signIn;
+export const signOut: NextAuthResult["signOut"] = nextAuth.signOut;
+export const auth: NextAuthResult["auth"] = nextAuth.auth;
