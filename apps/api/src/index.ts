@@ -1,41 +1,46 @@
-import "./lib/env.js";
-import Fastify, { type FastifyError } from "fastify";
-import cors from "@fastify/cors";
-import jwt from "@fastify/jwt";
+import { config } from "./config/index.js";
+import Fastify from "fastify";
 import { designRoutes } from "./routes/design.routes.js";
+import { corsPlugin } from "./plugins/cors.js";
+import { jwtPlugin } from "./plugins/jwt.js";
+import { cookiePlugin } from "./plugins/cookies.js";
+import { errorHanlder } from "./lib/errorHandler.js";
+import { authPlugin } from "./plugins/auth.js";
+import { authRoutes } from "./routes/auth.routes.js";
 
 const app = Fastify({
   logger: {
     level: "info",
-    ...(process.env["NODE_ENV"] !== "production" && {
+    ...(config.NODE_ENV !== "production" && {
       transport: { target: "pino-pretty" },
     }),
   },
 });
 
 // Register plugins
-app.register(cors, { origin: "http://localhost:3000" });
-app.register(jwt, { secret: process.env["JWT_SECRET"]! });
+app.register(corsPlugin);
+app.register(jwtPlugin);
+app.register(cookiePlugin);
+app.register(authPlugin);
 
 // Error handler
-app.setErrorHandler((error: FastifyError, _, reply) => {
-  app.log.error(error);
-  reply.status(error.statusCode ?? 500).send({
-    success: false,
-    error: error.message ?? "Internal Server Error",
-  });
-});
+app.register(errorHanlder);
 
-// Routes
+// Health check route
 app.get("/health", async () => {
   return { status: "ok" };
 });
+
+// Auth routes
+app.register(authRoutes);
+
+// Design routes
 app.register(designRoutes);
 
 // Start server
 const start = async () => {
   try {
-    await app.listen({ port: 3001, host: "0.0.0.0" });
+    await app.listen({ port: config.PORT, host: config.HOST });
   } catch (err) {
     app.log.error(err);
     process.exit(1);
