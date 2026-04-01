@@ -1,7 +1,5 @@
 import fp from "fastify-plugin";
 import type { JWTPayload } from "../types/index.js";
-import jwt from "jsonwebtoken";
-import { config } from "../config/index.js";
 
 export const authPlugin = fp(async (fastify) => {
   fastify.decorate("authenticate", async (req, reply) => {
@@ -9,7 +7,7 @@ export const authPlugin = fp(async (fastify) => {
     if (!token) return reply.status(401).send({ error: "Unauthorized" });
 
     try {
-      const payload = jwt.verify(token, config.JWT_ACCESS_SECRET) as JWTPayload;
+      const payload = fastify.jwt.verify(token) as JWTPayload;
       req.user = payload;
     } catch {
       return reply.status(401).send({ error: "Invalid or expired token" });
