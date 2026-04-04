@@ -4,6 +4,7 @@ import gracefullShutdown from "./lib/shutdown.js";
 import helmet from "@fastify/helmet";
 import corsPlugin from "./plugins/cors.js";
 import jwtPlugin from "./plugins/jwt.js";
+import cookiePlugin from "./plugins/cookie.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -16,6 +17,7 @@ const app = Fastify({
 // Plugins
 app.register(helmet);
 app.register(corsPlugin);
+app.register(cookiePlugin);
 app.register(jwtPlugin);
 
 app.get("/health", async (_req, reply) => {
