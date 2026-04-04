@@ -3,6 +3,7 @@ import Fastify from "fastify";
 import gracefullShutdown from "./lib/shutdown.js";
 import helmet from "@fastify/helmet";
 import corsPlugin from "./plugins/cors.js";
+import jwtPlugin from "./plugins/jwt.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -15,6 +16,7 @@ const app = Fastify({
 // Plugins
 app.register(helmet);
 app.register(corsPlugin);
+app.register(jwtPlugin);
 
 app.get("/health", async (_req, reply) => {
   reply.send({ message: "Api is running" });

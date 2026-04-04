@@ -6,7 +6,8 @@ configDotenv();
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   NODE_ENV : z.enum(['DEV' , 'PROD' , 'TEST']).default('DEV'),
-  CLIENT_URL : z.url()
+  CLIENT_URL : z.url(),
+  JWT_SECRET : z.string()
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
