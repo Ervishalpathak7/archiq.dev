@@ -5,7 +5,8 @@ configDotenv();
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
-  NODE_ENV : z.enum(['DEV' , 'PROD' , 'TEST']).default('DEV')
+  NODE_ENV : z.enum(['DEV' , 'PROD' , 'TEST']).default('DEV'),
+  CLIENT_URL : z.url()
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

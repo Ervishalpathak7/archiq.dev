@@ -1,6 +1,8 @@
 import config from "./config.js";
 import Fastify from "fastify";
 import gracefullShutdown from "./lib/shutdown.js";
+import helmet from "@fastify/helmet";
+import corsPlugin from "./plugins/cors.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -9,6 +11,10 @@ const app = Fastify({
     transport: { target: "pino-pretty" },
   },
 });
+
+// Plugins
+app.register(helmet);
+app.register(corsPlugin);
 
 app.get("/health", async (_req, reply) => {
   reply.send({ message: "Api is running" });

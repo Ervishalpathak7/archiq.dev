@@ -18,9 +18,13 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/helmet": "^13.0.2",
+    "@fastify/jwt": "^10.0.0",
     "@types/node": "^25.5.2",
     "dotenv": "^17.4.0",
     "fastify": "^5.8.4",
+    "fastify-plugin": "^5.1.0",
     "zod": "^4.3.6"
   }
 }
