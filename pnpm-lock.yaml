@@ -11,9 +11,15 @@ importers:
       '@types/node':
         specifier: ^25.5.2
         version: 25.5.2
+      dotenv:
+        specifier: ^17.4.0
+        version: 17.4.0
       fastify:
         specifier: ^5.8.4
         version: 5.8.4
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       typescript:
         specifier: ^6.0.2
@@ -73,6 +79,10 @@ packages:
   dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
+
+  dotenv@17.4.0:
+    resolution: {integrity: sha512-kCKF62fwtzwYm0IGBNjRUjtJgMfGapII+FslMHIjMR5KTnwEmBmWLDRSnc3XSNP8bNy34tekgQyDT0hr7pERRQ==}
+    engines: {node: '>=12'}
 
   fast-decode-uri-component@1.0.1:
     resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
@@ -196,6 +206,9 @@ packages:
   undici-types@7.18.2:
     resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+
 snapshots:
 
   '@fastify/ajv-compiler@4.0.5':
@@ -250,6 +263,8 @@ snapshots:
   cookie@1.1.1: {}
 
   dequal@2.0.3: {}
+
+  dotenv@17.4.0: {}
 
   fast-decode-uri-component@1.0.1: {}
 
@@ -377,3 +392,5 @@ snapshots:
   typescript@6.0.2: {}
 
   undici-types@7.18.2: {}
+
+  zod@4.3.6: {}
