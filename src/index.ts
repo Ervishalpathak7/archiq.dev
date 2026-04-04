@@ -9,7 +9,7 @@ app.get("/", async (_req, _reply) => {
   return { hello: "world" };
 });
 
-app.listen({ port: config.data.port }, (err) => {
+app.listen({ port: config.port }, (err) => {
   if (err) {
     app.log.error("Fail to start server");
     process.exit(1);
