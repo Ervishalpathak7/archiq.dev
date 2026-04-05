@@ -24,4 +24,21 @@ const redisPlugin = fastifyPlugin(async (fastify) => {
   });
 });
 
+export async function getCache<T>(
+  redis: Redis,
+  key: string,
+): Promise<T | null> {
+  const raw = await redis.get(key);
+  if (!raw) return null;
+  return JSON.parse(raw) as T;
+}
+
+export async function setCache(
+  redis: Redis,
+  key: string,
+  value: unknown,
+): Promise<void> {
+  await redis.set(key, JSON.stringify(value));
+}
+
 export default redisPlugin;
