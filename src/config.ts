@@ -1,5 +1,5 @@
-import z from "zod";
 import { configDotenv } from "dotenv";
+import z from "zod";
 
 configDotenv();
 
@@ -9,6 +9,7 @@ const envSchema = z.object({
   CLIENT_URL : z.url(),
   JWT_SECRET : z.string(),
   COOKIE_SIGNATURE_KEY : z.string(),
+  DATABASE_URL : z.url(),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
