@@ -10,6 +10,7 @@ const envSchema = z.object({
   JWT_SECRET : z.string(),
   COOKIE_SIGNATURE_KEY : z.string(),
   DATABASE_URL : z.url(),
+  REDIS_URL: z.string().default('redis://localhost:6379')
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

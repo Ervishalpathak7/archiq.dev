@@ -1,3 +1,4 @@
+import type { Redis } from "ioredis";
 import type { PrismaClient } from "../generated/prisma/client.js";
 
 export interface JWTPayload {
@@ -15,5 +16,6 @@ declare module "fastify" {
   interface FastifyInstance {
     authenticate: (req: FastifyRequest, reply: FastifyReply) => Promise<void>;
     prisma: PrismaClient;
+    redis : Redis
   }
 }
