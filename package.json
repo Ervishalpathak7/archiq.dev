@@ -19,6 +19,7 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
+    "@clerk/fastify": "^3.1.6",
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.2.0",
     "@fastify/helmet": "^13.0.2",

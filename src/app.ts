@@ -6,6 +6,7 @@ import jwtPlugin from "./plugins/jwt.js";
 import cookiePlugin from "./plugins/cookie.js";
 import prismaPlugin from "./plugins/prisma.js";
 import redisPlugin from "./plugins/redis.js";
+import clerk from "./plugins/clerk.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -22,6 +23,7 @@ app.register(cookiePlugin);
 app.register(jwtPlugin);
 app.register(prismaPlugin);
 app.register(redisPlugin);
+app.register(clerk);
 
 app.get("/health", async (_req, reply) => {
   reply.send({ message: "Api is running" });
