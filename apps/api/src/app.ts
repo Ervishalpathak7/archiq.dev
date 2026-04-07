@@ -9,6 +9,7 @@ import redisPlugin from "./plugins/redis.js";
 import clerk from "./plugins/clerk.js";
 import fastifyRawBody from "fastify-raw-body";
 import authWebhook from "./webhooks/auth.js";
+import healthRoutes from "./routes/health.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -16,6 +17,7 @@ const app = Fastify({
     level: "info",
     transport: { target: "pino-pretty" },
   },
+  disableRequestLogging: true,
 });
 
 // Plugins
@@ -30,9 +32,8 @@ app.register(prismaPlugin);
 app.register(redisPlugin);
 app.register(clerk);
 
-app.get("/health", async (_req, reply) => {
-  reply.send({ message: "Api is running" });
-});
+// Routes
+app.register(healthRoutes);
 app.register(authWebhook);
 
 process.on("SIGINT", () => gracefullShutdown(app));

@@ -11,7 +11,6 @@ const authWebhook = fastifyPlugin(async (fastify) => {
       config: { rawBody: true },
     },
     async (req, reply) => {
-
       const svix_id = req.headers["svix-id"] as string;
       const svix_timestamp = req.headers["svix-timestamp"] as string;
       const svix_signature = req.headers["svix-signature"] as string;
@@ -33,7 +32,7 @@ const authWebhook = fastifyPlugin(async (fastify) => {
         return reply.status(400).send({ error: "Invalid webhook signature" });
       }
 
-      if (event.type === "user.created") {
+      if (event.type === "user.created" || event.type === "user.updated") {
         const {
           id: clerkId,
           email_addresses,

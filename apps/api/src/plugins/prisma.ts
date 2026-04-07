@@ -8,6 +8,7 @@ const prismaPlugin = fastifyPlugin(async (fastify) => {
     fastify.decorate("prisma", prisma);
     fastify.addHook("onClose", async () => {
       await prisma.$disconnect();
+      await prisma.$queryRaw`SELECT 1`;
       fastify.log.info("Database Disconnected");
     });
   } catch (error) {

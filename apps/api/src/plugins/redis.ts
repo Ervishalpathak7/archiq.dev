@@ -5,17 +5,18 @@ import config from "../config.js";
 const redisPlugin = fastifyPlugin(async (fastify) => {
   const redisClient = new Redis(config.REDIS_URL);
 
-  await new Promise<void>((resolve, reject) => {
-    redisClient.on("ready", () => {
-      fastify.log.info("Redis Connected");
+  await new Promise<void>(async (resolve, reject) => {
+    redisClient.on("ready", async () => {
+      await redisClient.ping();
+      fastify.log.info("Redis ready");
       resolve();
     });
     redisClient.on("error", (err) => {
       reject(new Error(`Redis connection failed: ${err.message}`));
     });
   });
-  fastify.decorate("redis", redisClient);
 
+  fastify.decorate("redis", redisClient);
   fastify.addHook("onClose", () => {
     if (redisClient) {
       redisClient.quit();
