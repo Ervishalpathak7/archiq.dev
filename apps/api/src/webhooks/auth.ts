@@ -1,7 +1,7 @@
 import fastifyPlugin from "fastify-plugin";
 import { Webhook } from "svix";
 import config from "../config.js";
-import { type WebhookEvent } from "@clerk/fastify";
+import { clerkClient, type WebhookEvent } from "@clerk/fastify";
 import { createUser } from "../services/user.service.js";
 
 const authWebhook = fastifyPlugin(async (fastify) => {
@@ -55,6 +55,13 @@ const authWebhook = fastifyPlugin(async (fastify) => {
           fastify.log.info(
             `New user registerd : ${(user.id, user.name, user.email)}`,
           );
+
+          await clerkClient.users.updateUserMetadata(clerkId, {
+            publicMetadata: {
+              db_user_id: user.id,
+            },
+          });
+
           return reply.send({ received: true });
         } catch (error) {
           fastify.log.error(error, "Error in User saving ");
