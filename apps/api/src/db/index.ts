@@ -3,12 +3,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client.js";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const certPath = path.resolve(__dirname, "../../certs/ca-certificate.crt");
+const certPath = path.resolve("certs/ca-certificate.crt");
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;

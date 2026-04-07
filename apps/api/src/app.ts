@@ -33,26 +33,6 @@ app.register(clerk);
 app.get("/health", async (_req, reply) => {
   reply.send({ message: "Api is running" });
 });
-
-app.get("/test", async (req, reply) => {
-  try {
-    const user = await app.prisma.user.create({
-      data: {
-        avatar: "heelo",
-        email: "vishal",
-        name: "vishal",
-        clerkId: "nksdjkhskvlv",
-      },
-    });
-    return reply.status(200).send({
-      data: user,
-    });
-  } catch (error) {
-    console.log("Error ", error);
-    return reply.status(500).send({ error: "Internal server error" });
-  }
-});
-
 app.register(authWebhook);
 
 process.on("SIGINT", () => gracefullShutdown(app));
