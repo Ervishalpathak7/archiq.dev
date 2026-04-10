@@ -14,6 +14,7 @@ const envSchema = z.object({
   CLERK_SECRET_KEY : z.string(),
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY : z.string(),
   CLERK_SIGNING_SECRET : z.string(),
+  GEMINI_API_KEY : z.string()
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

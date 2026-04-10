@@ -10,6 +10,7 @@ import clerk from "./plugins/clerk.js";
 import fastifyRawBody from "fastify-raw-body";
 import authWebhook from "./webhooks/auth.js";
 import healthRoutes from "./routes/health.js";
+import aiPlugin from "./plugins/ai.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -31,6 +32,7 @@ app.register(jwtPlugin);
 app.register(prismaPlugin);
 app.register(redisPlugin);
 app.register(clerk);
+app.register(aiPlugin);
 
 // Routes
 app.register(healthRoutes);

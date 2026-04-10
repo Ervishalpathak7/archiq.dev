@@ -1,5 +1,6 @@
 import type { Redis } from "ioredis";
 import type { PrismaClient } from "../generated/prisma/client.js";
+import type { GoogleGenAI } from "@google/genai";
 
 export interface JWTPayload {
   userId: string;
@@ -17,6 +18,7 @@ declare module "fastify" {
     authenticate: (req: FastifyRequest, reply: FastifyReply) => Promise<void>;
     prisma: PrismaClient;
     redis: Redis;
+    ai : GoogleGenAI
   }
   interface FastifyRequest {
     userId: string;
