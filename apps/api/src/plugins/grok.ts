@@ -1,11 +1,12 @@
 import fastifyPlugin from "fastify-plugin";
-import { GoogleGenAI } from "@google/genai";
 import config from "../config.js";
+import Groq from "groq-sdk";
 
 const aiPlugin = fastifyPlugin((fastify) => {
-  const ai = new GoogleGenAI({
-    apiKey: config.GEMINI_API_KEY,
+  const ai = new Groq({
+    apiKey: config.GROQ_API_KEY,
   });
+
   fastify.decorate("ai", ai);
 });
 

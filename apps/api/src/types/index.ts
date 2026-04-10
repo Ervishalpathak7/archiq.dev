@@ -1,6 +1,21 @@
 import type { Redis } from "ioredis";
 import type { PrismaClient } from "../generated/prisma/client.js";
-import type { GoogleGenAI } from "@google/genai";
+import type Groq from "groq-sdk";
+
+export type DesignSchema = {
+  title: string;
+  components: { id: string; label: string; type: string }[];
+  connections: { id: string; source: string; target: string; label?: string }[];
+  lldModules: { name: string; responsibilities: string[] }[];
+  techStack: {
+    frontend?: string;
+    backend?: string;
+    database?: string;
+    cache?: string;
+    queue?: string;
+  };
+  scalingNotes: string[];
+};
 
 export interface JWTPayload {
   userId: string;
@@ -18,7 +33,7 @@ declare module "fastify" {
     authenticate: (req: FastifyRequest, reply: FastifyReply) => Promise<void>;
     prisma: PrismaClient;
     redis: Redis;
-    ai : GoogleGenAI
+    ai: Groq;
   }
   interface FastifyRequest {
     userId: string;
