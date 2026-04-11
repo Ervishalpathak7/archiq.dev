@@ -4,11 +4,11 @@ import { prisma } from "../db/index.js";
 const prismaPlugin = fastifyPlugin(async (fastify) => {
   try {
     await prisma.$connect();
+    await prisma.$queryRaw`SELECT 1`;
     fastify.log.info("Database Connected");
     fastify.decorate("prisma", prisma);
     fastify.addHook("onClose", async () => {
       await prisma.$disconnect();
-      await prisma.$queryRaw`SELECT 1`;
       fastify.log.info("Database Disconnected");
     });
   } catch (error) {

@@ -10,7 +10,6 @@ async function getUserById(prisma: PrismaClient, redis: Redis, id: string) {
   } else {
     user = await prisma.user.findUnique({ where: { id } });
     if (user) {
-      user.password = null;
       setCache(redis, `user:${user.id}`, user).catch((err) => {
         console.error("Error while saving cache ", err);
       });
