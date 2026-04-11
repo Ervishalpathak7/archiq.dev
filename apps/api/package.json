@@ -18,6 +18,7 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
+  "@archiq/types": "workspace:*",
     "@clerk/fastify": "^3.1.6",
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.2.0",

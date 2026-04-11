@@ -1,4 +1,4 @@
-import type { DesignSchema } from "../types/index.js";
+import type { DesignSchema } from "@archiq/types";
 
 const JSONDesignSchema: DesignSchema = {
   title: "< title of the system >",
