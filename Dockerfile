@@ -3,6 +3,7 @@ RUN npm install -g pnpm
 WORKDIR /app
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
 COPY apps/api ./apps/api
+COPY packages/types ./packages/types
 
 FROM base AS builder
 ARG DATABASE_URL
