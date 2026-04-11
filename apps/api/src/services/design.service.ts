@@ -21,7 +21,6 @@ export const generateDesign = async (
   ai: Groq,
   onChunk: (text: string) => void,
   prismaClient: PrismaClient,
-  redisClient?: RedisClient,
 ) => {
   try {
     const result = await ai.chat.completions.create({
