@@ -1,4 +1,3 @@
-import type { RedisClient } from "ioredis/built/connectors/SentinelConnector/types.js";
 import type Groq from "groq-sdk";
 import type { PrismaClient } from "../generated/prisma/client.js";
 
