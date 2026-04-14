@@ -20,6 +20,7 @@ export default function Page() {
   const handleGenerate = async () => {
     const response = await fetch("http://localhost:4000/api/generate", {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         description: prompt,
@@ -29,27 +30,30 @@ export default function Page() {
         type: "Full stack",
       }),
     });
-
-    const reader = response.body!.getReader();
-    const decoder = new TextDecoder();
-    let fullDesign = "";
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const text = decoder
-        .decode(value)
-        .split("\n")
-        .filter((line) => line.startsWith("data: "))
-        .map((line) => line.replace("data: ", ""))
-        .join("");
-      fullDesign += text;
+    if (!response.ok) {
+      console.log(response);
+    } else {
+      const reader = response.body!.getReader();
+      const decoder = new TextDecoder();
+      let fullDesign = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder
+          .decode(value)
+          .split("\n")
+          .filter((line) => line.startsWith("data: "))
+          .map((line) => line.replace("data: ", ""))
+          .join("");
+        fullDesign += text;
+      }
+      setFullResponse(() => fullDesign);
+      console.log("Full response : ", fullDesign);
+      const design = JSON.parse(fullDesign);
+      const { nodes, edges } = buildDiagram(design);
+      setNodes(nodes);
+      setEdges(edges);
     }
-    setFullResponse(() => fullDesign);
-    console.log("Full response : ", fullDesign);
-    const design = JSON.parse(fullDesign);
-    const { nodes, edges } = buildDiagram(design);
-    setNodes(nodes);
-    setEdges(edges);
   };
 
   return (

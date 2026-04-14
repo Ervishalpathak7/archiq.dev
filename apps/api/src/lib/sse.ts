@@ -1,11 +1,13 @@
 import type { FastifyReply } from "fastify";
+import config from "../config.js";
 
 export const initSSE = (reply: FastifyReply) => {
   reply.raw.writeHead(200, {
     "content-type": "text/event-stream",
     "cache-control": "no-cache",
     connection: "keep-alive",
-    "Access-Control-Allow-Origin": "*", 
+    "access-control-allow-origin": config.CLIENT_URL,
+    "access-control-allow-credentials": "true",
   });
   reply.hijack();
 };

@@ -5,11 +5,15 @@ import config from "../config.js";
 const corsPlugin = fastifyPlugin((fastify) => {
   fastify.register(fastifyCors, {
     origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
       if (
         config.NODE_ENV === "DEV" ||
         (config.CLIENT_URL && origin === config.CLIENT_URL)
       ) {
-        callback(null, true);
+        callback(null, origin);
       } else {
         callback(new Error("Not allowed by CORS"), false);
       }
