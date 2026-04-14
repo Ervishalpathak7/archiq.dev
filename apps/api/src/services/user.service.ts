@@ -25,20 +25,18 @@ async function createUser(
     name,
     clerkId,
     avatar,
-    password,
   }: {
     email: string;
     name: string;
     clerkId: string;
     avatar: string;
-    password?: string;
   },
 ) {
   try {
     const user = await prisma.user.upsert({
       where: { clerkId },
       update: { email, name, avatar },
-      create: { email, name, avatar, clerkId, password: password ?? null },
+      create: { email, name, avatar, clerkId },
     });
     setCache(redis, `user:${user.id}`, user).catch((err) => {
       console.error("Error while saving cache", err);
