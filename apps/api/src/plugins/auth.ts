@@ -2,13 +2,15 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import fastifyPlugin from "fastify-plugin";
 import { getAuth } from "@clerk/fastify";
 
-const authPlugin = fastifyPlugin(async (fastify) => {
+const authPlugin = fastifyPlugin((fastify) => {
   fastify.decorate(
     "authenticate",
-    async (req: FastifyRequest, reply: FastifyReply) => {
+    async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
       const { userId, isAuthenticated } = getAuth(req);
-      if (!isAuthenticated)
-        return reply.status(401).send({ error: "UNAUTHORIZED" });
+      if (!isAuthenticated) {
+        reply.status(401).send({ error: "UNAUTHORIZED" });
+        return;
+      }
       req.userId = userId;
     },
   );

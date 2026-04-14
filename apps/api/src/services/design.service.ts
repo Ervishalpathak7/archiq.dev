@@ -1,28 +1,15 @@
 import type Groq from "groq-sdk";
 import type { PrismaClient } from "../generated/prisma/client.js";
+import type { DesignOption } from "@archiq/types";
 
-export const generateDesign = async (
-  {
-    userId,
-    systemPrompt,
-    userPrompt,
-    title,
-    description,
-    techStack,
-  }: {
-    title: string;
-    description: string;
-    techStack: string;
-    systemPrompt: string;
-    userPrompt: string;
-    userId: string;
-  },
-  ai: Groq,
-  onChunk: (text: string) => void,
-  prismaClient: PrismaClient,
-) => {
+async function generateDesignFromAi(
+  aiClient: Groq,
+  systemPrompt: string,
+  userPrompt: string,
+  onChunk: (chunk: string) => void,
+) {
   try {
-    const result = await ai.chat.completions.create({
+    const result = await aiClient.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: systemPrompt },
@@ -39,20 +26,44 @@ export const generateDesign = async (
     }
 
     const JsonDesign = JSON.parse(completeDesign);
+    return JsonDesign;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const createDesign = async (
+  userId: string,
+  { title, description, techStack, systemPrompt, userPrompt }: DesignOption,
+  ai: Groq,
+  onChunk: (text: string) => void,
+  prismaClient: PrismaClient,
+) => {
+  try {
+    const aiDesign = await generateDesignFromAi(
+      ai,
+      systemPrompt,
+      userPrompt,
+      onChunk,
+    );
+
     const design = await prismaClient.design.create({
       data: {
         title,
         description,
-        body: JsonDesign,
+        body: aiDesign,
         techStack: techStack,
         authorId: userId,
       },
     });
-
-    console.log(design);
+    console.log("New Design Created : ", {
+      id: design.id,
+      title: design.title,
+      description: design.description,
+      body: design.body,
+      author: design.authorId,
+    });
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    console.log("Error in generating design : ", errorMessage);
-    throw error;
+    console.error("Error in Generating Design From Ai : ", error);
   }
 };

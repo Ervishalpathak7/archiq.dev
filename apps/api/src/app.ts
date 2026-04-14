@@ -2,7 +2,6 @@ import Fastify from "fastify";
 import gracefullShutdown from "./lib/shutdown.js";
 import helmet from "@fastify/helmet";
 import corsPlugin from "./plugins/cors.js";
-import jwtPlugin from "./plugins/jwt.js";
 import cookiePlugin from "./plugins/cookie.js";
 import prismaPlugin from "./plugins/prisma.js";
 import redisPlugin from "./plugins/redis.js";
@@ -12,6 +11,7 @@ import authWebhook from "./webhooks/auth.js";
 import healthRoutes from "./routes/health.js";
 import aiPlugin from "./plugins/grok.js";
 import designRoutes from "./routes/deisgn.js";
+import authPlugin from "./plugins/auth.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -28,11 +28,11 @@ app.register(fastifyRawBody, {
   global: false,
 });
 app.register(corsPlugin);
+app.register(clerk);
+app.register(authPlugin);
 app.register(cookiePlugin);
-app.register(jwtPlugin);
 app.register(prismaPlugin);
 app.register(redisPlugin);
-app.register(clerk);
 app.register(aiPlugin);
 
 // Routes

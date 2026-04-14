@@ -7,6 +7,7 @@ export const initSSE = (reply: FastifyReply) => {
     connection: "keep-alive",
     "Access-Control-Allow-Origin": "*", 
   });
+  reply.hijack();
 };
 
 export const sendChunk = (reply: FastifyReply, data: string) => {

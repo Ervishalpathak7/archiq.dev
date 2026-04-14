@@ -12,3 +12,11 @@ export type DesignSchema = {
   };
   scalingNotes: string[];
 };
+
+export type DesignOption = {
+  title: string;
+  description: string;
+  techStack: string;
+  systemPrompt: string;
+  userPrompt: string;
+};
