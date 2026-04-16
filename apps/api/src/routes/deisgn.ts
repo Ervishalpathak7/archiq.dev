@@ -1,7 +1,6 @@
 import fastifyPlugin from "fastify-plugin";
-import { createDesign } from "../services/design.service.js";
-import { closeSSE, initSSE, sendChunk } from "../lib/sse.js";
-import { generatePrompt } from "../services/prompt.service.js";
+import { designGenerateController } from "../controllers/design/designGenerate.js";
+import { getDesignListController } from "../controllers/design/getDesign.js";
 
 const designRoutes = fastifyPlugin((fastify) => {
   fastify.post(
@@ -11,48 +10,27 @@ const designRoutes = fastifyPlugin((fastify) => {
         await fastify.authenticate(req, reply);
       },
     },
+    designGenerateController(fastify),
+  );
 
-    async (req, reply) => {
-      const {
-        description,
-        scale,
-        type = "full stack",
-        techStack,
-        traffic,
-      } = req.body as {
-        description: string;
-        scale: string;
-        type: string;
-        techStack: string;
-        traffic: string;
-      };
-      const prompt = generatePrompt(
-        description,
-        type,
-        scale,
-        techStack,
-        traffic,
-      );
-      try {
-        initSSE(reply);
-        await createDesign(
-          req.userId,
-          {
-            title: "random-for-now",
-            description,
-            techStack,
-            userPrompt: prompt.userPrompt,
-            systemPrompt: prompt.systemPrompt,
-          },
-          fastify.ai,
-          (text: string) => sendChunk(reply, text),
-          fastify.prisma,
-        );
-        closeSSE(reply);
-      } catch (error) {
-        reply.raw.end();
-      }
+  fastify.get(
+    "/api/design",
+    {
+      preHandler: async (req, reply) => {
+        await fastify.authenticate(req, reply);
+      },
     },
+    getDesignListController(fastify),
+  );
+
+  fastify.get(
+    "/api/design/:designId",
+    {
+      preHandler: async (req, reply) => {
+        await fastify.authenticate(req, reply);
+      },
+    },
+    getDesignListController(fastify),
   );
 });
 

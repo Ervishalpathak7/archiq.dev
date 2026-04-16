@@ -67,3 +67,29 @@ export const createDesign = async (
     console.error("Error in Generating Design From Ai : ", error);
   }
 };
+
+export const getDesignListService = async (
+  prisma: PrismaClient,
+  userId: string,
+) => {
+  return await prisma.design.findMany({
+    where: {
+      authorId: userId,
+    },
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+};
+
+export const getDesignDataById = async (
+  prisma: PrismaClient,
+  designId: string,
+) => {
+  return await prisma.design.findUnique({
+    where: {
+      id: designId,
+    },
+  });
+};
