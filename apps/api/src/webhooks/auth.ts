@@ -45,7 +45,7 @@ const authWebhook = fastifyPlugin(async (fastify) => {
         const name = `${first_name ?? ""} ${last_name ?? ""}`.trim();
 
         try {
-          const user = await createUser(fastify.prisma, fastify.redis, {
+          const user = await createUser(fastify.prisma, {
             email,
             name,
             clerkId,

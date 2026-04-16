@@ -4,7 +4,6 @@ import helmet from "@fastify/helmet";
 import corsPlugin from "./plugins/cors.js";
 import cookiePlugin from "./plugins/cookie.js";
 import prismaPlugin from "./plugins/prisma.js";
-import redisPlugin from "./plugins/redis.js";
 import clerk from "./plugins/clerk.js";
 import fastifyRawBody from "fastify-raw-body";
 import authWebhook from "./webhooks/auth.js";
@@ -32,7 +31,6 @@ app.register(clerk);
 app.register(authPlugin);
 app.register(cookiePlugin);
 app.register(prismaPlugin);
-app.register(redisPlugin);
 app.register(aiPlugin);
 
 // Routes
