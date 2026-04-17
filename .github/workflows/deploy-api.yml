@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/ervishalpathak7/archiq-api
+          images: ghcr.io/ervishalpathak7/archiq-ai
           tags: |
             type=sha
             type=raw,value=latest
