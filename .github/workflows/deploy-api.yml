@@ -2,7 +2,7 @@ name: Deploy API
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -28,16 +28,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/ervishalpathak7/archiq-api
           tags: |
-            type=raw,value=latest
             type=sha
-            type=ref,event=branch
+            type=raw,value=latest
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      
-      # 3. Build + push (with cache)
+
+      # Build + push (with cache)
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
@@ -48,12 +47,25 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # 4. Deploy
-      - name: Install Doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Deploy on DO
+      # Extract SHA 
+      - name: Extract SHA tag
         run: |
-          doctl apps create-deployment 63add680-6615-44d7-b63c-9e7dccb7e08d --force-rebuild
+          FULL_TAG=$(echo "${{ steps.meta.outputs.tags }}" | grep sha- | head -n1)
+          TAG=${FULL_TAG##*:}
+          echo "IMAGE_TAG=$TAG" >> $GITHUB_ENV
+
+      # # Deploy
+      # - name: Install Doctl
+      #   uses: digitalocean/action-doctl@v2
+      #   with:
+      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      # - name: Deploy on DO with SHA image
+      #   run: |
+      #       doctl apps spec get 63add680-6615-44d7-b63c-9e7dccb7e08d > app.yaml
+      #       sed -i "s/tag: .*/tag: ${IMAGE_TAG}/" app.yaml
+      #       doctl apps update 63add680-6615-44d7-b63c-9e7dccb7e08d --spec app.yaml
+      
+      # - name: Verify deployment triggered
+      #   run: doctl apps get 63add680-6615-44d7-b63c-9e7dccb7e08d
+        
