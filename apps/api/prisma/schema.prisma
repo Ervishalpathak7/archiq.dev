@@ -15,6 +15,7 @@ model User {
   updatedAt DateTime @updatedAt
   avatar    String
   clerkId   String   @unique
+  designs   Design[]
 }
 
 model Design {
@@ -24,5 +25,7 @@ model Design {
   techStack   String
   body        Json
   updatedAt   DateTime @updatedAt
+  author      User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
+  @@index([authorId])
 }
