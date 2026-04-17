@@ -2,8 +2,7 @@ name: Deploy API
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read
@@ -16,21 +15,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 1. Login to GHCR
       - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build image
-        run: |
-          docker build \
-            -t ghcr.io/${{ github.repository_owner }}/archiq-api:latest \
-            -t ghcr.io/${{ github.repository_owner }}/archiq-api:${{ github.sha }} \
-            .
+      # 2. Generate tags + labels
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha
+            type=ref,event=branch
 
-      - name: Push image
-        run: |
-          docker push ghcr.io/${{ github.repository_owner }}/archiq-api:latest
-          docker push ghcr.io/${{ github.repository_owner }}/archiq-api:${{ github.sha }}
+      # 3. Build + push (with cache)
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
+      # 4. Deploy
       - name: Install Doctl
         uses: digitalocean/action-doctl@v2
         with:
