@@ -62,10 +62,10 @@ jobs:
 
       - name: Deploy on DO with SHA image
         run: |
-            doctl apps spec get 63add680-6615-44d7-b63c-9e7dccb7e08d > app.yaml
+            doctl apps spec get 5ebf6865-e48b-4a94-bdb8-a7aed284f0fa > app.yaml
             sed -i "s/tag: .*/tag: ${IMAGE_TAG}/" app.yaml
-            doctl apps update 63add680-6615-44d7-b63c-9e7dccb7e08d --spec app.yaml
+            doctl apps update 5ebf6865-e48b-4a94-bdb8-a7aed284f0fa --spec app.yaml
       
       - name: Verify deployment triggered
-        run: doctl apps get 63add680-6615-44d7-b63c-9e7dccb7e08d
+        run: doctl apps get 5ebf6865-e48b-4a94-bdb8-a7aed284f0fa
         
