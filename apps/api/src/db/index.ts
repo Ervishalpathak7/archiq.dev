@@ -1,10 +1,7 @@
 import config from "../config.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client.js";
-import fs from "fs";
-import path from "path";
 
-const certPath = path.resolve("certs/ca-certificate.crt");
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -13,14 +10,7 @@ const globalForPrisma = globalThis as unknown as {
 let prismaInstance = globalForPrisma.prisma;
 
 if (!prismaInstance) {
-  const adapter = new PrismaPg({
-    connectionString: config.DATABASE_URL,
-    ssl: {
-      ca: fs.readFileSync(certPath, "utf-8"),
-      rejectUnauthorized: true, // equivalent to verify-full
-    },
-  });
-
+  const adapter = new PrismaPg({ connectionString: config.DATABASE_URL });
   prismaInstance = new PrismaClient({ adapter });
 }
 
