@@ -5,35 +5,37 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: |
+          docker build \
+            -t ghcr.io/${{ github.repository_owner }}/archiq-api:latest \
+            -t ghcr.io/${{ github.repository_owner }}/archiq-api:${{ github.sha }} \
+            .
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/archiq-api:latest
+          docker push ghcr.io/${{ github.repository_owner }}/archiq-api:${{ github.sha }}
 
       - name: Install Doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Login to DO registery
-        run: doctl registry login
-
-      - name: Build Docker image
+      - name: Deploy on DO
         run: |
-          docker build \
-            --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            -t registry.digitalocean.com/archiq-dev/archiq-api:latest \
-            -t registry.digitalocean.com/archiq-dev/archiq-api:${{ github.sha }} \
-            .
-        
-      - name: Push Docker image
-        run: |
-          docker push registry.digitalocean.com/archiq-dev/archiq-api:latest
-          docker push registry.digitalocean.com/archiq-dev/archiq-api:${{ github.sha }}
-
-      - name: Deploy to App Platform
-        run: | 
           doctl apps create-deployment 63add680-6615-44d7-b63c-9e7dccb7e08d --force-rebuild
