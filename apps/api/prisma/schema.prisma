@@ -11,19 +11,23 @@ model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   avatar    String
   clerkId   String   @unique
   designs   Design[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Design {
   id          String   @id @default(cuid())
   title       String
-  description String
+  description String?
   techStack   String
   body        Json
+  scale       String
+  traffic     String
+  userPrompt  String
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   author      User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    String
