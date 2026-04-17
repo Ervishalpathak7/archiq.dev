@@ -4,7 +4,6 @@ const healthRoutes = fastifyPlugin(async (fastify) => {
   fastify.get("/health", async (_req, reply) => {
     try {
       await fastify.prisma.$queryRaw`SELECT 1`;
-      await fastify.redis.ping();
       return reply.send({
         status: "ok",
         db: "up",

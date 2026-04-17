@@ -1,4 +1,3 @@
-import type { Redis } from "ioredis";
 import type { PrismaClient } from "../generated/prisma/client.js";
 import type Groq from "groq-sdk";
 
@@ -11,7 +10,6 @@ declare module "fastify" {
   interface FastifyInstance {
     authenticate: (req: FastifyRequest, reply: FastifyReply) => Promise<void>;
     prisma: PrismaClient;
-    redis: Redis;
     ai: Groq;
   }
   interface FastifyRequest {
