@@ -16,6 +16,6 @@ export const sendChunk = (reply: FastifyReply, data: string) => {
   reply.raw.write(`data: ${data}\n\n`);
 };
 
-export const closeSSE = (reply: FastifyReply) => {
-  reply.raw.end();
+export const closeSSE = (reply: FastifyReply, data: string) => {
+  reply.raw.end({ data });
 };

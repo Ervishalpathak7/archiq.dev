@@ -1,10 +1,10 @@
 import type { PrismaClient } from "../../generated/prisma/client.js";
-import type { Design, UpdateDesignDTO } from "./design.types.js";
+import type { CreateDesignDTO, UpdateDesignDTO } from "./design.types.js";
 
 export class DesignRepository {
   constructor(private db: PrismaClient) {}
 
-  async create(data: Design) {
+  async create(data: CreateDesignDTO) {
     return this.db.design.create({ data });
   }
 

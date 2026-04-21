@@ -1,26 +1,14 @@
-import type {
-  InputJsonValue,
-} from "../../generated/prisma/internal/prismaNamespace.js";
-
-export interface Design {
-  id?: string;
-  title: string;
-  description: string | null;
-  userPrompt: string;
-  techStack: string;
-  body: InputJsonValue;
-  scale: string;
-  traffic: string;
-  authorId: string;
-}
+import type { DesignSchema } from "@archiq/types";
+import type { InputJsonValue } from "../../generated/prisma/internal/prismaNamespace.js";
 
 export interface CreateDesignDTO {
   title: string;
-  description: string | null;
+  description?: string | null;
   userPrompt: string;
   techStack: string;
-  scale: string;
-  traffic: string;
+  body: InputJsonValue;
+  scale: "small" | "medium" | "large";
+  traffic: "low" | "moderate" | "high";
   authorId: string;
 }
 
@@ -34,6 +22,7 @@ export interface UpdateDesignDTO {
   description?: string;
   userPrompt?: string;
   techStack?: string;
-  scale?: string;
-  traffic?: string;
+  scale?: "small" | "medium" | "large";
+  traffic?: "low" | "moderate" | "high";
 }
+
