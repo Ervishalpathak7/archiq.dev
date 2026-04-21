@@ -13,7 +13,8 @@ export type User = {
 
 type AuthContextValue = {
   user: User | null;
-  loading: boolean;
+  isSignedIn: boolean;
+  isLoaded: boolean;
   signOut: () => void;
 };
 
@@ -36,7 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value: AuthContextValue = {
     user: mappedUser,
-    loading: !isLoaded,
+    isLoaded: isLoaded,
+    isSignedIn: isSignedIn!,
     signOut,
   };
 
@@ -49,7 +51,6 @@ export function useAuth() {
   return ctx;
 }
 
-/* ---------- Designs — re-exported from lib/designs.ts ---------- */
 export {
   type DesignSummary,
   loadDesigns,
