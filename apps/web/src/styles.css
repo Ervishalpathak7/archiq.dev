@@ -1,0 +1,225 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Coffee-tech inspired palette.
+ * Dark = near-black surfaces, warm copper/amber accent.
+ * Light = warm cream surfaces, same copper accent.
+ */
+
+@theme inline {
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-grid: var(--grid);
+}
+
+/* Light theme — warm cream */
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.985 0.008 75);
+  --foreground: oklch(0.18 0.012 60);
+
+  --surface-1: oklch(0.965 0.01 75);
+  --surface-2: oklch(0.94 0.012 75);
+  --grid: oklch(0.85 0.012 75);
+
+  --card: oklch(0.99 0.005 75);
+  --card-foreground: oklch(0.18 0.012 60);
+  --popover: oklch(0.99 0.005 75);
+  --popover-foreground: oklch(0.18 0.012 60);
+
+  --primary: oklch(0.66 0.16 55); /* warm copper */
+  --primary-foreground: oklch(0.99 0.01 75);
+
+  --secondary: oklch(0.94 0.012 75);
+  --secondary-foreground: oklch(0.22 0.012 60);
+
+  --muted: oklch(0.94 0.012 75);
+  --muted-foreground: oklch(0.5 0.015 60);
+
+  --accent: oklch(0.92 0.025 60);
+  --accent-foreground: oklch(0.22 0.012 60);
+
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0.005 75);
+
+  --border: oklch(0.88 0.012 70);
+  --input: oklch(0.9 0.01 70);
+  --ring: oklch(0.66 0.16 55);
+
+  --chart-1: oklch(0.66 0.16 55);
+  --chart-2: oklch(0.6 0.12 200);
+  --chart-3: oklch(0.55 0.14 280);
+  --chart-4: oklch(0.7 0.15 140);
+  --chart-5: oklch(0.65 0.18 20);
+
+  --sidebar: oklch(0.97 0.008 75);
+  --sidebar-foreground: oklch(0.22 0.012 60);
+  --sidebar-primary: oklch(0.66 0.16 55);
+  --sidebar-primary-foreground: oklch(0.99 0.005 75);
+  --sidebar-accent: oklch(0.93 0.012 75);
+  --sidebar-accent-foreground: oklch(0.22 0.012 60);
+  --sidebar-border: oklch(0.88 0.012 70);
+  --sidebar-ring: oklch(0.66 0.16 55);
+}
+
+/* Dark theme — coffee-tech near-black */
+.dark {
+  --background: oklch(0.14 0.005 260); /* #0A0B0E-ish */
+  --foreground: oklch(0.96 0.005 75);
+
+  --surface-1: oklch(0.18 0.006 260); /* #111317 */
+  --surface-2: oklch(0.22 0.007 260); /* #16181D */
+  --grid: oklch(0.28 0.008 260);
+
+  --card: oklch(0.18 0.006 260);
+  --card-foreground: oklch(0.96 0.005 75);
+  --popover: oklch(0.18 0.006 260);
+  --popover-foreground: oklch(0.96 0.005 75);
+
+  --primary: oklch(0.74 0.16 55); /* amber/copper */
+  --primary-foreground: oklch(0.16 0.01 60);
+
+  --secondary: oklch(0.24 0.008 260);
+  --secondary-foreground: oklch(0.96 0.005 75);
+
+  --muted: oklch(0.22 0.007 260);
+  --muted-foreground: oklch(0.66 0.012 75);
+
+  --accent: oklch(0.28 0.02 55);
+  --accent-foreground: oklch(0.96 0.005 75);
+
+  --destructive: oklch(0.62 0.22 22);
+  --destructive-foreground: oklch(0.98 0.005 75);
+
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.74 0.16 55);
+
+  --chart-1: oklch(0.74 0.16 55);
+  --chart-2: oklch(0.7 0.14 200);
+  --chart-3: oklch(0.65 0.16 280);
+  --chart-4: oklch(0.72 0.15 140);
+  --chart-5: oklch(0.7 0.18 20);
+
+  --sidebar: oklch(0.16 0.006 260);
+  --sidebar-foreground: oklch(0.96 0.005 75);
+  --sidebar-primary: oklch(0.74 0.16 55);
+  --sidebar-primary-foreground: oklch(0.16 0.01 60);
+  --sidebar-accent: oklch(0.22 0.007 260);
+  --sidebar-accent-foreground: oklch(0.96 0.005 75);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.74 0.16 55);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Stitch-style dotted grid background */
+.bg-grid-dots {
+  background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+}
+
+/* Shimmer used during mock generation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-1) 0%,
+    var(--surface-2) 50%,
+    var(--surface-1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* React Flow theming hooks */
+.react-flow__edge-path {
+  stroke: var(--muted-foreground);
+}
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke: var(--primary);
+}
+.react-flow__attribution {
+  display: none !important;
+}
