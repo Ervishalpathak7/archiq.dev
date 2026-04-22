@@ -5,8 +5,8 @@ import { ReactNode } from "react";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — Stitch" },
-      { name: "description", content: "The terms governing use of the Stitch platform." },
+      { title: "Terms of Service — Archiq" },
+      { name: "description", content: "The terms governing use of the Archiq platform." },
     ],
   }),
   component: TermsPage,
@@ -25,7 +25,7 @@ function LegalLayout({ title, children }: { title: string; children: ReactNode }
         </Link>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight">{title}</h1>
         <p className="mt-2 text-sm text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
-        <div className="prose-stitch mt-8 space-y-6 text-sm leading-relaxed text-foreground/90">
+        <div className="prose-Archiq mt-8 space-y-6 text-sm leading-relaxed text-foreground/90">
           {children}
         </div>
       </main>
@@ -39,14 +39,14 @@ function TermsPage() {
       <section>
         <h2 className="text-base font-semibold">1. Acceptance of terms</h2>
         <p className="mt-2 text-muted-foreground">
-          By accessing or using Stitch, you agree to be bound by these Terms of Service. If you do not
+          By accessing or using Archiq, you agree to be bound by these Terms of Service. If you do not
           agree, do not use the service.
         </p>
       </section>
       <section>
         <h2 className="text-base font-semibold">2. Use of the service</h2>
         <p className="mt-2 text-muted-foreground">
-          Stitch generates illustrative system architecture diagrams. Outputs are provided as-is and
+          Archiq generates illustrative system architecture diagrams. Outputs are provided as-is and
           should be reviewed by a qualified engineer before being used in production planning.
         </p>
       </section>
@@ -72,7 +72,7 @@ function TermsPage() {
       </section>
       <section>
         <h2 className="text-base font-semibold">6. Contact</h2>
-        <p className="mt-2 text-muted-foreground">Questions? Reach us at hello@stitch.example.</p>
+        <p className="mt-2 text-muted-foreground">Questions? Reach us at hello@Archiq.example.</p>
       </section>
     </LegalLayout>
   );

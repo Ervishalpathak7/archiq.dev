@@ -13,21 +13,17 @@ import {
   Globe,
   Workflow,
 } from "lucide-react";
-import type { ArchNodeKind } from "@/lib/architectures";
 import { cn } from "@/lib/utils";
-
-export type ArchNodeData = {
-  kind: ArchNodeKind;
-  label: string;
-  sublabel?: string;
-  ghost?: boolean;
-};
+import { ArchNodeData, ArchNodeType } from "@/types";
 
 const kindMeta: Record<
-  ArchNodeKind,
+  ArchNodeType,
   { icon: React.ComponentType<{ className?: string }>; tone: string }
 > = {
-  client: { icon: Globe, tone: "text-sky-400 border-sky-400/30 bg-sky-400/5" },
+  client: {
+    icon: Globe,
+    tone: "text-sky-400 border-sky-400/30 bg-sky-400/5",
+  },
   gateway: {
     icon: Network,
     tone: "text-violet-400 border-violet-400/30 bg-violet-400/5",
@@ -40,7 +36,10 @@ const kindMeta: Record<
     icon: Database,
     tone: "text-emerald-400 border-emerald-400/30 bg-emerald-400/5",
   },
-  cache: { icon: Zap, tone: "text-rose-400 border-rose-400/30 bg-rose-400/5" },
+  cache: {
+    icon: Zap,
+    tone: "text-rose-400 border-rose-400/30 bg-rose-400/5",
+  },
   queue: {
     icon: Workflow,
     tone: "text-orange-400 border-orange-400/30 bg-orange-400/5",
@@ -61,7 +60,10 @@ const kindMeta: Record<
     icon: Lock,
     tone: "text-yellow-400 border-yellow-400/30 bg-yellow-400/5",
   },
-  cdn: { icon: Cloud, tone: "text-cyan-400 border-cyan-400/30 bg-cyan-400/5" },
+  cdn: {
+    icon: Cloud,
+    tone: "text-cyan-400 border-cyan-400/30 bg-cyan-400/5",
+  },
 };
 
 export function ArchNodeView({ data }: NodeProps<ArchNodeData>) {
@@ -86,7 +88,7 @@ export function ArchNodeView({ data }: NodeProps<ArchNodeData>) {
       <Handle
         type="target"
         position={Position.Left}
-        className="h-2! !w-2 border-0! !bg-muted-foreground"
+        className="h-2! w-2! border-0! bg-muted-foreground!"
       />
       <div className="flex items-center gap-2">
         <span

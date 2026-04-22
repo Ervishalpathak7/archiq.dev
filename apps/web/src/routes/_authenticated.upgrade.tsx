@@ -10,10 +10,10 @@ import { useUser } from "@clerk/react";
 export const Route = createFileRoute("/_authenticated/upgrade")({
   head: () => ({
     meta: [
-      { title: "Upgrade plan — Stitch" },
+      { title: "Upgrade plan — Archiq" },
       {
         name: "description",
-        content: "Pick a Stitch plan that fits your workflow.",
+        content: "Pick a Archiq plan that fits your workflow.",
       },
     ],
   }),

@@ -3,148 +3,142 @@
  * Picked by keyword from the user's prompt to simulate AI generation.
  */
 
-export type ArchNodeKind =
-  | "client"
-  | "gateway"
-  | "service"
-  | "database"
-  | "cache"
-  | "queue"
-  | "storage"
-  | "ai"
-  | "external"
-  | "auth"
-  | "cdn";
-
-export type ArchNode = {
-  id: string;
-  kind: ArchNodeKind;
-  label: string;
-  sublabel?: string;
-  position: { x: number; y: number };
-};
-
-export type ArchEdge = {
-  id: string;
-  sourceId: string;
-  targetId: string;
-  label?: string;
-  animated?: boolean;
-};
-
-export type Architecture = {
-  title: string;
-  nodes: ArchNode[];
-  edges: ArchEdge[];
-};
+import { Architecture, ArchNodeType } from "@/types";
 
 const ecommerce: Architecture = {
   title: "E-commerce platform",
   nodes: [
     {
       id: "web",
-      kind: "client",
-      label: "Web App",
-      sublabel: "Next.js",
       position: { x: 40, y: 200 },
+      data: {
+        kind: "client",
+        label: "Web App",
+        sublabel: "Next.js",
+      },
     },
     {
       id: "mobile",
-      kind: "client",
-      label: "Mobile App",
-      sublabel: "React Native",
       position: { x: 40, y: 360 },
+      data: {
+        kind: "client",
+        label: "Mobile App",
+        sublabel: "React Native",
+      },
     },
     {
       id: "cdn",
-      kind: "cdn",
-      label: "CDN",
-      sublabel: "Cloudflare",
       position: { x: 260, y: 80 },
+      data: {
+        kind: "cdn",
+        label: "CDN",
+        sublabel: "Cloudflare",
+      },
     },
     {
       id: "gw",
-      kind: "gateway",
-      label: "API Gateway",
-      sublabel: "Kong",
       position: { x: 260, y: 280 },
+      data: {
+        kind: "gateway",
+        label: "API Gateway",
+        sublabel: "Kong",
+      },
     },
     {
       id: "auth",
-      kind: "auth",
-      label: "Auth Service",
-      sublabel: "OAuth 2.0",
       position: { x: 500, y: 100 },
+      data: {
+        kind: "auth",
+        label: "Auth Service",
+        sublabel: "OAuth 2.0",
+      },
     },
     {
       id: "catalog",
-      kind: "service",
-      label: "Catalog Service",
       position: { x: 500, y: 220 },
+      data: {
+        kind: "service",
+        label: "Catalog Service",
+      },
     },
     {
       id: "cart",
-      kind: "service",
-      label: "Cart Service",
       position: { x: 500, y: 320 },
+      data: {
+        kind: "service",
+        label: "Cart Service",
+      },
     },
     {
       id: "orders",
-      kind: "service",
-      label: "Orders Service",
       position: { x: 500, y: 420 },
+      data: {
+        kind: "service",
+        label: "Orders Service",
+      },
     },
     {
       id: "payments",
-      kind: "external",
-      label: "Stripe",
-      sublabel: "Payments",
       position: { x: 760, y: 420 },
+      data: {
+        kind: "external",
+        label: "Stripe",
+        sublabel: "Payments",
+      },
     },
     {
       id: "pgsql",
-      kind: "database",
-      label: "Postgres",
-      sublabel: "Primary DB",
       position: { x: 760, y: 220 },
+      data: {
+        kind: "database",
+        label: "Postgres",
+        sublabel: "Primary DB",
+      },
     },
     {
       id: "redis",
-      kind: "cache",
-      label: "Redis",
-      sublabel: "Cache",
       position: { x: 760, y: 320 },
+      data: {
+        kind: "cache",
+        label: "Redis",
+        sublabel: "Cache",
+      },
     },
     {
       id: "queue",
-      kind: "queue",
-      label: "RabbitMQ",
-      sublabel: "Order events",
       position: { x: 760, y: 520 },
+      data: {
+        kind: "queue",
+        label: "RabbitMQ",
+        sublabel: "Order events",
+      },
     },
     {
       id: "search",
-      kind: "service",
-      label: "Search",
-      sublabel: "Elasticsearch",
       position: { x: 1000, y: 220 },
+      data: {
+        kind: "service",
+        label: "Search",
+        sublabel: "Elasticsearch",
+      },
     },
   ],
   edges: [
-    { id: "e1", sourceId: "web", targetId: "cdn", animated: true },
-    { id: "e2", sourceId: "web", targetId: "gw", animated: true },
-    { id: "e3", sourceId: "mobile", targetId: "gw", animated: true },
-    { id: "e4", sourceId: "gw", targetId: "auth", label: "JWT" },
-    { id: "e5", sourceId: "gw", targetId: "catalog" },
-    { id: "e6", sourceId: "gw", targetId: "cart" },
-    { id: "e7", sourceId: "gw", targetId: "orders" },
-    { id: "e8", sourceId: "catalog", targetId: "pgsql" },
-    { id: "e9", sourceId: "cart", targetId: "redis" },
-    { id: "e10", sourceId: "orders", targetId: "pgsql" },
-    { id: "e11", sourceId: "orders", targetId: "payments", animated: true },
-    { id: "e12", sourceId: "orders", targetId: "queue", animated: true },
-    { id: "e13", sourceId: "catalog", targetId: "search" },
+    { id: "e1", source: "web", target: "cdn", animated: true },
+    { id: "e2", source: "web", target: "gw", animated: true },
+    { id: "e3", source: "mobile", target: "gw", animated: true },
+    { id: "e4", source: "gw", target: "auth", label: "JWT" },
+    { id: "e5", source: "gw", target: "catalog" },
+    { id: "e6", source: "gw", target: "cart" },
+    { id: "e7", source: "gw", target: "orders" },
+    { id: "e8", source: "catalog", target: "pgsql" },
+    { id: "e9", source: "cart", target: "redis" },
+    { id: "e10", source: "orders", target: "pgsql" },
+    { id: "e11", source: "orders", target: "payments", animated: true },
+    { id: "e12", source: "orders", target: "queue", animated: true },
+    { id: "e13", source: "catalog", target: "search" },
   ],
+  id: ""
 };
 
 const realtimeChat: Architecture = {
@@ -152,92 +146,115 @@ const realtimeChat: Architecture = {
   nodes: [
     {
       id: "client",
-      kind: "client",
-      label: "Chat Clients",
-      sublabel: "Web + Mobile",
       position: { x: 40, y: 280 },
+      data: {
+        kind: "client",
+        label: "Chat Clients",
+        sublabel: "Web + Mobile",
+      },
     },
     {
       id: "lb",
-      kind: "gateway",
-      label: "Load Balancer",
-      sublabel: "WebSocket",
       position: { x: 280, y: 280 },
+      data: {
+        kind: "gateway",
+        label: "Load Balancer",
+        sublabel: "WebSocket",
+      },
     },
     {
       id: "ws1",
-      kind: "service",
-      label: "WS Gateway 1",
       position: { x: 520, y: 180 },
+      data: {
+        kind: "service",
+        label: "WS Gateway 1",
+      },
     },
     {
       id: "ws2",
-      kind: "service",
-      label: "WS Gateway 2",
       position: { x: 520, y: 380 },
+      data: {
+        kind: "service",
+        label: "WS Gateway 2",
+      },
     },
     {
       id: "auth",
-      kind: "auth",
-      label: "Auth",
-      sublabel: "JWT",
       position: { x: 280, y: 100 },
+      data: {
+        kind: "auth",
+        label: "Auth",
+        sublabel: "JWT",
+      },
     },
     {
       id: "presence",
-      kind: "cache",
-      label: "Redis Pub/Sub",
-      sublabel: "Presence",
       position: { x: 760, y: 280 },
+      data: {
+        kind: "cache",
+        label: "Redis Pub/Sub",
+        sublabel: "Presence",
+      },
     },
     {
       id: "msg",
-      kind: "service",
-      label: "Message Service",
       position: { x: 1000, y: 180 },
+      data: {
+        kind: "service",
+        label: "Message Service",
+      },
     },
     {
       id: "media",
-      kind: "service",
-      label: "Media Service",
       position: { x: 1000, y: 380 },
+      data: {
+        kind: "service",
+        label: "Media Service",
+      },
     },
     {
       id: "db",
-      kind: "database",
-      label: "Cassandra",
-      sublabel: "Messages",
       position: { x: 1240, y: 180 },
+      data: {
+        kind: "database",
+        label: "Cassandra",
+        sublabel: "Messages",
+      },
     },
     {
       id: "s3",
-      kind: "storage",
-      label: "Object Storage",
-      sublabel: "Media",
       position: { x: 1240, y: 380 },
+      data: {
+        kind: "storage",
+        label: "Object Storage",
+        sublabel: "Media",
+      },
     },
     {
       id: "push",
-      kind: "external",
-      label: "FCM / APNS",
-      sublabel: "Push",
       position: { x: 1240, y: 520 },
+      data: {
+        kind: "external",
+        label: "FCM / APNS",
+        sublabel: "Push",
+      },
     },
   ],
   edges: [
-    { id: "c1", sourceId: "client", targetId: "auth", label: "login" },
-    { id: "c2", sourceId: "client", targetId: "lb", animated: true },
-    { id: "c3", sourceId: "lb", targetId: "ws1", animated: true },
-    { id: "c4", sourceId: "lb", targetId: "ws2", animated: true },
-    { id: "c5", sourceId: "ws1", targetId: "presence", animated: true },
-    { id: "c6", sourceId: "ws2", targetId: "presence", animated: true },
-    { id: "c7", sourceId: "ws1", targetId: "msg" },
-    { id: "c8", sourceId: "ws2", targetId: "msg" },
-    { id: "c9", sourceId: "msg", targetId: "db" },
-    { id: "c10", sourceId: "msg", targetId: "media" },
-    { id: "c11", sourceId: "media", targetId: "s3" },
-    { id: "c12", sourceId: "msg", targetId: "push", animated: true },
+    { id: "c1", source: "client", target: "auth", label: "login" },
+    { id: "c2", source: "client", target: "lb", animated: true },
+    { id: "c3", source: "lb", target: "ws1", animated: true },
+    { id: "c4", source: "lb", target: "ws2", animated: true },
+    { id: "c5", source: "ws1", target: "presence", animated: true },
+    { id: "c6", source: "ws2", target: "presence", animated: true },
+    { id: "c7", source: "ws1", target: "msg" },
+    { id: "c8", source: "ws2", target: "msg" },
+    { id: "c9", source: "msg", target: "db" },
+    { id: "c10", source: "msg", target: "media" },
+    { id: "c11", source: "media", target: "s3" },
+    { id: "c12", source: "msg", target: "push", animated: true },
   ],
+  id: ""
 };
 
 const videoStreaming: Architecture = {
@@ -245,76 +262,95 @@ const videoStreaming: Architecture = {
   nodes: [
     {
       id: "viewer",
-      kind: "client",
-      label: "Viewers",
-      sublabel: "Web / TV / Mobile",
       position: { x: 40, y: 280 },
+      data: {
+        kind: "client",
+        label: "Viewers",
+        sublabel: "Web / TV / Mobile",
+      },
     },
     {
       id: "edge",
-      kind: "cdn",
-      label: "Edge CDN",
-      sublabel: "HLS/DASH",
       position: { x: 280, y: 280 },
+      data: {
+        kind: "cdn",
+        label: "Edge CDN",
+        sublabel: "HLS/DASH",
+      },
     },
     {
       id: "origin",
-      kind: "service",
-      label: "Origin Server",
       position: { x: 520, y: 280 },
+      data: {
+        kind: "service",
+        label: "Origin Server",
+      },
     },
     {
       id: "transcode",
-      kind: "service",
-      label: "Transcoder",
-      sublabel: "FFmpeg cluster",
       position: { x: 760, y: 180 },
+      data: {
+        kind: "service",
+        label: "Transcoder",
+        sublabel: "FFmpeg cluster",
+      },
     },
     {
       id: "storage",
-      kind: "storage",
-      label: "Object Storage",
-      sublabel: "Segments",
       position: { x: 760, y: 380 },
+      data: {
+        kind: "storage",
+        label: "Object Storage",
+        sublabel: "Segments",
+      },
     },
     {
       id: "ingest",
-      kind: "service",
-      label: "Ingest",
-      sublabel: "RTMP/SRT",
       position: { x: 1000, y: 180 },
+      data: {
+        kind: "service",
+        label: "Ingest",
+        sublabel: "RTMP/SRT",
+      },
     },
     {
       id: "creator",
-      kind: "client",
-      label: "Creators",
       position: { x: 1240, y: 180 },
+      data: {
+        kind: "client",
+        label: "Creators",
+      },
     },
     {
       id: "meta",
-      kind: "database",
-      label: "Postgres",
-      sublabel: "Metadata",
       position: { x: 520, y: 460 },
+      data: {
+        kind: "database",
+        label: "Postgres",
+        sublabel: "Metadata",
+      },
     },
     {
       id: "analytics",
-      kind: "queue",
-      label: "Kafka",
-      sublabel: "Play events",
       position: { x: 280, y: 460 },
+      data: {
+        kind: "queue",
+        label: "Kafka",
+        sublabel: "Play events",
+      },
     },
   ],
   edges: [
-    { id: "v1", sourceId: "viewer", targetId: "edge", animated: true },
-    { id: "v2", sourceId: "edge", targetId: "origin" },
-    { id: "v3", sourceId: "origin", targetId: "storage" },
-    { id: "v4", sourceId: "transcode", targetId: "storage" },
-    { id: "v5", sourceId: "ingest", targetId: "transcode", animated: true },
-    { id: "v6", sourceId: "creator", targetId: "ingest", animated: true },
-    { id: "v7", sourceId: "origin", targetId: "meta" },
-    { id: "v8", sourceId: "viewer", targetId: "analytics", animated: true },
+    { id: "v1", source: "viewer", target: "edge", animated: true },
+    { id: "v2", source: "edge", target: "origin" },
+    { id: "v3", source: "origin", target: "storage" },
+    { id: "v4", source: "transcode", target: "storage" },
+    { id: "v5", source: "ingest", target: "transcode", animated: true },
+    { id: "v6", source: "creator", target: "ingest", animated: true },
+    { id: "v7", source: "origin", target: "meta" },
+    { id: "v8", source: "viewer", target: "analytics", animated: true },
   ],
+  id: ""
 };
 
 const aiPipeline: Architecture = {
@@ -322,68 +358,92 @@ const aiPipeline: Architecture = {
   nodes: [
     {
       id: "client",
-      kind: "client",
-      label: "Client App",
       position: { x: 40, y: 280 },
+      data: {
+        kind: "client",
+        label: "Client App",
+      },
     },
     {
       id: "gw",
-      kind: "gateway",
-      label: "API Gateway",
       position: { x: 280, y: 280 },
+      data: {
+        kind: "gateway",
+        label: "API Gateway",
+      },
     },
-    { id: "auth", kind: "auth", label: "Auth", position: { x: 280, y: 120 } },
+    {
+      id: "auth",
+      position: { x: 280, y: 120 },
+      data: {
+        kind: "auth",
+        label: "Auth",
+      },
+    },
     {
       id: "router",
-      kind: "service",
-      label: "Model Router",
       position: { x: 520, y: 280 },
+      data: {
+        kind: "service",
+        label: "Model Router",
+      },
     },
     {
       id: "queue",
-      kind: "queue",
-      label: "Job Queue",
-      sublabel: "Redis",
       position: { x: 760, y: 380 },
+      data: {
+        kind: "queue",
+        label: "Job Queue",
+        sublabel: "Redis",
+      },
     },
     {
       id: "llm",
-      kind: "ai",
-      label: "LLM Inference",
-      sublabel: "GPU pool",
       position: { x: 760, y: 180 },
+      data: {
+        kind: "ai",
+        label: "LLM Inference",
+        sublabel: "GPU pool",
+      },
     },
     {
       id: "embed",
-      kind: "ai",
-      label: "Embeddings",
       position: { x: 1000, y: 180 },
+      data: {
+        kind: "ai",
+        label: "Embeddings",
+      },
     },
     {
       id: "vector",
-      kind: "database",
-      label: "Vector DB",
-      sublabel: "pgvector",
       position: { x: 1240, y: 180 },
+      data: {
+        kind: "database",
+        label: "Vector DB",
+        sublabel: "pgvector",
+      },
     },
     {
       id: "log",
-      kind: "storage",
-      label: "Log Storage",
-      sublabel: "S3",
       position: { x: 1000, y: 380 },
+      data: {
+        kind: "storage",
+        label: "Log Storage",
+        sublabel: "S3",
+      },
     },
   ],
   edges: [
-    { id: "a1", sourceId: "client", targetId: "gw", animated: true },
-    { id: "a2", sourceId: "gw", targetId: "auth" },
-    { id: "a3", sourceId: "gw", targetId: "router" },
-    { id: "a4", sourceId: "router", targetId: "llm", animated: true },
-    { id: "a5", sourceId: "router", targetId: "queue" },
-    { id: "a6", sourceId: "llm", targetId: "embed" },
-    { id: "a7", sourceId: "embed", targetId: "vector" },
-    { id: "a8", sourceId: "router", targetId: "log" },
+    { id: "a1", source: "client", target: "gw", animated: true },
+    { id: "a2", source: "gw", target: "auth" },
+    { id: "a3", source: "gw", target: "router" },
+    { id: "a4", source: "router", target: "llm", animated: true },
+    { id: "a5", source: "router", target: "queue" },
+    { id: "a6", source: "llm", target: "embed" },
+    { id: "a7", source: "embed", target: "vector" },
+    { id: "a8", source: "router", target: "log" },
   ],
+  id: ""
 };
 
 const genericWebApp: Architecture = {
@@ -391,73 +451,99 @@ const genericWebApp: Architecture = {
   nodes: [
     {
       id: "user",
-      kind: "client",
-      label: "Web Client",
-      sublabel: "React SPA",
       position: { x: 40, y: 240 },
+      data: {
+        kind: "client",
+        label: "Web Client",
+        sublabel: "React SPA",
+      },
     },
-    { id: "cdn", kind: "cdn", label: "CDN", position: { x: 260, y: 100 } },
+    {
+      id: "cdn",
+      position: { x: 260, y: 100 },
+      data: {
+        kind: "cdn",
+        label: "CDN",
+      },
+    },
     {
       id: "gw",
-      kind: "gateway",
-      label: "API Gateway",
       position: { x: 260, y: 280 },
+      data: {
+        kind: "gateway",
+        label: "API Gateway",
+      },
     },
     {
       id: "auth",
-      kind: "auth",
-      label: "Auth Service",
       position: { x: 500, y: 120 },
+      data: {
+        kind: "auth",
+        label: "Auth Service",
+      },
     },
     {
       id: "api",
-      kind: "service",
-      label: "Application API",
       position: { x: 500, y: 280 },
+      data: {
+        kind: "service",
+        label: "Application API",
+      },
     },
     {
       id: "worker",
-      kind: "service",
-      label: "Background Worker",
       position: { x: 500, y: 440 },
+      data: {
+        kind: "service",
+        label: "Background Worker",
+      },
     },
     {
       id: "db",
-      kind: "database",
-      label: "Postgres",
       position: { x: 760, y: 280 },
+      data: {
+        kind: "database",
+        label: "Postgres",
+      },
     },
     {
       id: "cache",
-      kind: "cache",
-      label: "Redis",
       position: { x: 760, y: 120 },
+      data: {
+        kind: "cache",
+        label: "Redis",
+      },
     },
     {
       id: "queue",
-      kind: "queue",
-      label: "Job Queue",
       position: { x: 760, y: 440 },
+      data: {
+        kind: "queue",
+        label: "Job Queue",
+      },
     },
     {
       id: "s3",
-      kind: "storage",
-      label: "Object Storage",
       position: { x: 1000, y: 280 },
+      data: {
+        kind: "storage",
+        label: "Object Storage",
+      },
     },
   ],
   edges: [
-    { id: "g1", sourceId: "user", targetId: "cdn", animated: true },
-    { id: "g2", sourceId: "user", targetId: "gw", animated: true },
-    { id: "g3", sourceId: "gw", targetId: "auth" },
-    { id: "g4", sourceId: "gw", targetId: "api" },
-    { id: "g5", sourceId: "api", targetId: "db" },
-    { id: "g6", sourceId: "api", targetId: "cache" },
-    { id: "g7", sourceId: "api", targetId: "queue" },
-    { id: "g8", sourceId: "queue", targetId: "worker", animated: true },
-    { id: "g9", sourceId: "worker", targetId: "db" },
-    { id: "g10", sourceId: "api", targetId: "s3" },
+    { id: "g1", source: "user", target: "cdn", animated: true },
+    { id: "g2", source: "user", target: "gw", animated: true },
+    { id: "g3", source: "gw", target: "auth" },
+    { id: "g4", source: "gw", target: "api" },
+    { id: "g5", source: "api", target: "db" },
+    { id: "g6", source: "api", target: "cache" },
+    { id: "g7", source: "api", target: "queue" },
+    { id: "g8", source: "queue", target: "worker", animated: true },
+    { id: "g9", source: "worker", target: "db" },
+    { id: "g10", source: "api", target: "s3" },
   ],
+  id: ""
 };
 
 export function pickArchitecture(prompt: string): Architecture {
@@ -475,7 +561,7 @@ export function pickArchitecture(prompt: string): Architecture {
 
 export const COMPONENT_CATALOG: {
   category: string;
-  items: { kind: ArchNodeKind; label: string; sublabel?: string }[];
+  items: { kind: ArchNodeType; label: string; sublabel?: string }[];
 }[] = [
   {
     category: "Compute",

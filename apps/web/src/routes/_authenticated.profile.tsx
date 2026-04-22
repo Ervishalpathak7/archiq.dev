@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowLeft, LogOut } from "lucide-react";
 import { Logo, ProfileMenu, PlanBadge } from "@/components/header-bits";
@@ -13,10 +13,10 @@ import { Plan } from "@/types";
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
     meta: [
-      { title: "Profile — Stitch" },
+      { title: "Profile — Archiq" },
       {
         name: "description",
-        content: "Manage your Stitch profile and account settings.",
+        content: "Manage your Archiq profile and account settings.",
       },
     ],
   }),

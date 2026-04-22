@@ -16,14 +16,12 @@ const authPlugin = fastifyPlugin(async (fastify) => {
           });
           return;
         }
-
         const dbUser = await fastify.prisma.user.findUnique({
           where: { clerkId: auth.userId },
           select: { id: true },
         });
 
         if (!dbUser) {
-          // User exists in Clerk but not yet in our DB
           fastify.log.warn(
             `Clerk user ${auth.userId} not found in database. Webhook may be pending.`,
           );
@@ -35,7 +33,6 @@ const authPlugin = fastifyPlugin(async (fastify) => {
           return;
         }
 
-        // Set the internal database user ID on the request
         req.userId = dbUser.id;
       } catch (error) {
         fastify.log.error(error, "Authentication middleware error");

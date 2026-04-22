@@ -1,6 +1,6 @@
 import { AppError } from "../../errors/index.js";
 import type { AiService } from "../ai/ai.service.js";
-import type { DesignRepository } from "./design.repo.js";
+import type { DesignRepository } from "./design.repository.js";
 import type { CreateDesignRequest } from "./design.schema.js";
 import type { UpdateDesignDTO } from "./design.types.js";
 

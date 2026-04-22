@@ -6,12 +6,11 @@ import cookiePlugin from "./plugins/cookie.js";
 import prismaPlugin from "./plugins/prisma.js";
 import clerk from "./plugins/clerk.js";
 import fastifyRawBody from "fastify-raw-body";
-// import authWebhook from "./webhooks/auth.js";
 import healthRoutes from "./routes/health.js";
 import aiPlugin from "./plugins/grok.js";
-// import designRoutes from "./routes/deisgn.js";
 import authPlugin from "./plugins/auth.js";
-import { DesignRoutes } from "./modules/design/design.route.js";
+import { DesignRoutes } from "./modules/design/design.routes.js";
+import { UserRoutes } from "./modules/user/user.routes.js";
 
 // Fastify app initialization
 const app = Fastify({
@@ -35,10 +34,15 @@ await app.register(authPlugin);     // Auth middleware (needs prisma + clerk)
 await app.register(aiPlugin);
 
 // Routes
-app.register(healthRoutes);
-// app.register(authWebhook);
-// app.register(designRoutes);
-app.register(DesignRoutes);
+app.register(healthRoutes, {
+  prefix: '/health'
+});
+app.register(UserRoutes, {
+  prefix: '/users'
+});
+app.register(DesignRoutes, {
+  prefix: '/designs'
+});
 
 
 process.on("SIGINT", () => gracefullShutdown(app));

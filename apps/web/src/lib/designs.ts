@@ -3,23 +3,18 @@
  * Separated from auth to respect single-responsibility.
  */
 
-export type DesignSummary = {
-  id: string;
-  title: string;
-  prompt: string;
-  createdAt: number;
-};
+import { fetchDesignByUser } from "@/api/designs";
+import { DesignSummary } from "@/types";
 
-const DESIGNS_KEY = "stitch-designs";
-
-export function loadDesigns(): DesignSummary[] {
+export async function loadDesigns(): Promise<DesignSummary[]> {
+  await fetchDesignByUser();
   return [];
 }
 
-export function saveDesign(d: DesignSummary) {}
+export function saveDesign(d: DesignSummary) { }
 
 export function getDesign(id: string): DesignSummary | undefined {
   return undefined;
 }
 
-export function deleteDesign(id: string) {}
+export function deleteDesign(id: string) { }

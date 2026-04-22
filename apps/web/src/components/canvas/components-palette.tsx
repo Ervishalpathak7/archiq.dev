@@ -1,8 +1,24 @@
-import { COMPONENT_CATALOG, type ArchNodeKind } from "@/lib/architectures";
-import { Server, Database, Cloud, Box, Network, Zap, HardDrive, Cpu, Globe, Lock, Workflow } from "lucide-react";
+import { COMPONENT_CATALOG } from "@/lib/architectures";
+import {
+  Server,
+  Database,
+  Cloud,
+  Box,
+  Network,
+  Zap,
+  HardDrive,
+  Cpu,
+  Globe,
+  Lock,
+  Workflow,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArchNodeType } from "@/types";
 
-const iconFor: Record<ArchNodeKind, React.ComponentType<{ className?: string }>> = {
+const iconFor: Record<
+  ArchNodeType,
+  React.ComponentType<{ className?: string }>
+> = {
   client: Globe,
   gateway: Network,
   service: Server,
@@ -20,7 +36,7 @@ export function ComponentsPalette({
   onAdd,
   className,
 }: {
-  onAdd: (kind: ArchNodeKind, label: string, sublabel?: string) => void;
+  onAdd: (kind: ArchNodeType, label: string, sublabel?: string) => void;
   className?: string;
 }) {
   return (
@@ -32,7 +48,9 @@ export function ComponentsPalette({
     >
       <div className="border-b border-border px-4 py-3">
         <h2 className="text-sm font-semibold">Components</h2>
-        <p className="mt-0.5 text-xs text-muted-foreground">Click to add to the canvas</p>
+        <p className="mt-0.5 text-xs text-muted-foreground">
+          Click to add to the canvas
+        </p>
       </div>
       <div className="flex-1 overflow-y-auto px-3 py-3">
         {COMPONENT_CATALOG.map((cat) => (

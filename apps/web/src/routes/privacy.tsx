@@ -4,8 +4,8 @@ import { Logo, ThemeToggle } from "@/components/header-bits";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — Stitch" },
-      { name: "description", content: "How Stitch collects, uses, and protects your information." },
+      { title: "Privacy Policy — Archiq" },
+      { name: "description", content: "How Archiq collects, uses, and protects your information." },
     ],
   }),
   component: PrivacyPage,
@@ -29,7 +29,7 @@ function PrivacyPage() {
             <h2 className="text-base font-semibold">Information we collect</h2>
             <p className="mt-2 text-muted-foreground">
               Account details (name, email), prompts you submit, and the diagrams you generate. We use
-              this to operate and improve Stitch.
+              this to operate and improve Archiq.
             </p>
           </section>
           <section>
@@ -50,7 +50,7 @@ function PrivacyPage() {
             <h2 className="text-base font-semibold">Your rights</h2>
             <p className="mt-2 text-muted-foreground">
               You can request a copy of your data or deletion at any time by emailing
-              privacy@stitch.example.
+              privacy@Archiq.example.
             </p>
           </section>
         </div>

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import { DesignService } from "./design.service.js";
-import { DesignRepository } from "./design.repo.js";
+import { DesignRepository } from "./design.repository.js";
 import { AiService } from "../ai/ai.service.js";
 import { systemPrompt } from "../ai/prompt.js";
 import { DesignController } from "./design.controller.js";
@@ -14,13 +14,11 @@ export const DesignRoutes = (fastify: FastifyInstance) => {
   const controller = new DesignController(service);
 
   fastify.addHook("preHandler", fastify.authenticate);
-
-  fastify.post("/designs", controller.create);
-
-  fastify.get("/users/me/designs", controller.getByAuthor);
+  fastify.post("/", controller.create);
+  fastify.get("/users/me", controller.getByAuthor);
 
   fastify.get<{ Params: { id: string } }>(
-    "/designs/:id",
+    "/:id",
     {
       schema: {
         params: {
@@ -36,7 +34,7 @@ export const DesignRoutes = (fastify: FastifyInstance) => {
   );
 
   fastify.put<{ Params: { id: string } }>(
-    "/designs/:id",
+    "/:id",
     {
       schema: {
         params: {

@@ -48,10 +48,10 @@ export const Route = createRootRoute({
         content:
           "Generate high-level system architecture diagrams from a prompt. Built for developers and engineering managers.",
       },
-      { name: "author", content: "Stitch" },
+      { name: "author", content: "Archiq" },
       {
         property: "og:title",
-        content: "Stitch — AI system architecture designer",
+        content: "Archiq — AI system architecture designer",
       },
       {
         property: "og:description",

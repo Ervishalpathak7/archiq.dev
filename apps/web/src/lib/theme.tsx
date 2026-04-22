@@ -8,7 +8,7 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = React.createContext<ThemeContextValue | null>(null);
-const STORAGE_KEY = "stitch-theme";
+const STORAGE_KEY = "Archiq-theme";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = React.useState<Theme>("dark");

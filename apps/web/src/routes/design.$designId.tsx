@@ -29,25 +29,28 @@ import {
 import { Logo, ProfileMenu } from "@/components/header-bits";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArchNodeView, type ArchNodeData } from "@/components/canvas/arch-node";
+import { ArchNodeView } from "@/components/canvas/arch-node";
 import { ComponentsPalette } from "@/components/canvas/components-palette";
-import {
-  pickArchitecture,
-  type ArchNodeKind,
-  type Architecture,
-} from "@/lib/architectures";
-import { getDesign, saveDesign, type DesignSummary } from "@/lib/designs";
+import { pickArchitecture } from "@/lib/architectures";
+import { getDesign, saveDesign } from "@/lib/designs";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import {
+  Architecture,
+  ArchNode,
+  ArchNodeData,
+  ArchNodeType,
+  DesignSummary,
+} from "@/types";
 
 export const Route = createFileRoute("/design/$designId")({
   head: ({ params }) => ({
     meta: [
-      { title: `Design ${params.designId} — Stitch` },
+      { title: `Design ${params.designId} — Archiq` },
       {
         name: "description",
         content:
-          "AI-generated system architecture diagram on the Stitch canvas.",
+          "AI-generated system architecture diagram on the Archiq canvas.",
       },
     ],
   }),
@@ -65,14 +68,14 @@ function archToFlow(
       id: n.id,
       type: "arch",
       position: n.position,
-      data: { kind: n.kind, label: n.label, sublabel: n.sublabel, ghost },
+      data: n.data,
     })),
     edges: ghost
       ? []
       : arch.edges.map((e) => ({
           id: e.id,
-          source: e.sourceId,
-          target: e.targetId,
+          source: e.source,
+          target: e.target,
           label: e.label,
           animated: e.animated,
           type: "smoothstep",
@@ -191,7 +194,7 @@ function DesignInner() {
       ),
     );
 
-  function addComponent(kind: ArchNodeKind, label: string, sublabel?: string) {
+  function addComponent(kind: ArchNodeType, label: string, sublabel?: string) {
     const id = `${kind}-${crypto.randomUUID().slice(0, 6)}`;
     const offsetX = 120 + (nodes.length % 5) * 60;
     const offsetY = 120 + Math.floor(nodes.length / 5) * 40;

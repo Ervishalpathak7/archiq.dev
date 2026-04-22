@@ -12,20 +12,16 @@ import { Logo, ProfileMenu } from "@/components/header-bits";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import {
-  loadDesigns,
-  saveDesign,
-  deleteDesign,
-  type DesignSummary,
-} from "@/lib/designs";
+import { loadDesigns, saveDesign, deleteDesign } from "@/lib/designs";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { isToday, isThisWeek } from "date-fns";
+import { DesignSummary } from "@/types";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — Stitch" },
+      { title: "Dashboard — Archiq" },
       {
         name: "description",
         content: "Your designs and a prompt to start a new one.",
@@ -216,7 +212,7 @@ function DashboardPage() {
               What are you designing today?
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Describe your system. Stitch will draw the architecture.
+              Describe your system. Archiq will draw the architecture.
             </p>
           </div>
 
@@ -232,7 +228,7 @@ function DashboardPage() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g. A multi-tenant SaaS with auth, billing, background jobs, and webhooks..."
-              className="min-h-[110px] resize-none border-0 bg-transparent font-mono text-sm shadow-none focus-visible:ring-0"
+              className="min-h-27.5 resize-none border-0 bg-transparent font-mono text-sm shadow-none focus-visible:ring-0"
             />
             <div className="flex items-center justify-end p-2">
               <Button type="submit" disabled={!prompt.trim()} className="gap-2">

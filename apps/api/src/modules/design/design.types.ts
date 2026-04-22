@@ -1,4 +1,3 @@
-import type { DesignSchema } from "@archiq/types";
 import type { InputJsonValue } from "../../generated/prisma/internal/prismaNamespace.js";
 
 export interface CreateDesignDTO {

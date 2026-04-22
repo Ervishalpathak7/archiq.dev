@@ -8,15 +8,15 @@ import { Logo, ProfileMenu } from "@/components/header-bits";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Stitch — Prompt to system architecture diagram" },
+      { title: "Archiq — Prompt to system architecture diagram" },
       {
         name: "description",
         content:
-          "Describe your system in plain English and watch Stitch draw a complete architecture diagram in seconds.",
+          "Describe your system in plain English and watch Archiq draw a complete architecture diagram in seconds.",
       },
       {
         property: "og:title",
-        content: "Stitch — Prompt to system architecture diagram",
+        content: "Archiq — Prompt to system architecture diagram",
       },
       {
         property: "og:description",
@@ -90,7 +90,7 @@ function Landing() {
           .
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
-          Stitch turns plain-English descriptions into high-level architecture
+          Archiq turns plain-English descriptions into high-level architecture
           diagrams — services, databases, queues, and the arrows between them.
         </p>
 
@@ -166,7 +166,7 @@ function Landing() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
           <div className="flex items-center gap-2">
             <Logo />
-            <span>· © {new Date().getFullYear()} Stitch</span>
+            <span>· © {new Date().getFullYear()} Archiq</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/terms" className="hover:text-foreground">

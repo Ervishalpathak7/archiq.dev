@@ -12,11 +12,11 @@ import { GithubIcon } from "@/components/ui/github";
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Log in — Stitch" },
+      { title: "Log in — Archiq" },
       {
         name: "description",
         content:
-          "Log in to your Stitch account to design system architectures.",
+          "Log in to your Archiq account to design system architectures.",
       },
     ],
   }),

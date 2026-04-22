@@ -1,7 +1,7 @@
-import fastifyPlugin from "fastify-plugin";
+import type { FastifyInstance } from "fastify";
 
-const healthRoutes = fastifyPlugin(async (fastify) => {
-  fastify.get("/health", async (_req, reply) => {
+const healthRoutes = async (fastify: FastifyInstance) => {
+  fastify.get("/", async (_req, reply) => {
     try {
       await fastify.prisma.$queryRaw`SELECT 1`;
       return reply.send({
@@ -17,6 +17,6 @@ const healthRoutes = fastifyPlugin(async (fastify) => {
       });
     }
   });
-});
+};
 
 export default healthRoutes;
