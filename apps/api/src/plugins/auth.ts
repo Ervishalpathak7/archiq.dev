@@ -2,16 +2,48 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import fastifyPlugin from "fastify-plugin";
 import { getAuth } from "@clerk/fastify";
 
-const authPlugin = fastifyPlugin((fastify) => {
+const authPlugin = fastifyPlugin(async (fastify) => {
   fastify.decorate(
     "authenticate",
     async (req: FastifyRequest, reply: FastifyReply): Promise<void> => {
-      const { userId, isAuthenticated } = getAuth(req);
-      if (!isAuthenticated) {
-        reply.status(401).send({ error: "UNAUTHORIZED" });
-        return;
+      try {
+        const auth = getAuth(req);
+
+        if (!auth.userId) {
+          reply.status(401).send({
+            error: "UNAUTHORIZED",
+            message: "Authentication required",
+          });
+          return;
+        }
+
+        const dbUser = await fastify.prisma.user.findUnique({
+          where: { clerkId: auth.userId },
+          select: { id: true },
+        });
+
+        if (!dbUser) {
+          // User exists in Clerk but not yet in our DB
+          fastify.log.warn(
+            `Clerk user ${auth.userId} not found in database. Webhook may be pending.`,
+          );
+          reply.status(403).send({
+            error: "USER_NOT_SYNCED",
+            message:
+              "Your account is being set up. Please try again in a moment.",
+          });
+          return;
+        }
+
+        // Set the internal database user ID on the request
+        req.userId = dbUser.id;
+      } catch (error) {
+        fastify.log.error(error, "Authentication middleware error");
+        reply.status(401).send({
+          error: "UNAUTHORIZED",
+          message: "Authentication failed",
+        });
       }
-      req.userId = userId;
     },
   );
 });

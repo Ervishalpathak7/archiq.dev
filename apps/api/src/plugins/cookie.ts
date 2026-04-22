@@ -18,7 +18,7 @@ export const setCookie = async (
   reply.setCookie(key, value, {
     httpOnly: true,
     secure: true,
-    sameSite: config.NODE_ENV === "PROD",
+    sameSite: config.NODE_ENV === "PROD" ? "strict" : "lax",
     path: "/",
     maxAge: age,
   });

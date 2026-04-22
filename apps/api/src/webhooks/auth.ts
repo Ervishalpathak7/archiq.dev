@@ -1,19 +1,19 @@
-// import fastifyPlugin from "fastify-plugin";
-// import { Webhook } from "svix";
-// import config from "../config.js";
-// import { clerkClient, type WebhookEvent } from "@clerk/fastify";
-// import { createUser } from "../services/user.service.js";
+// // import fastifyPlugin from "fastify-plugin";
+// // import { Webhook } from "svix";
+// // import config from "../config.js";
+// // import { clerkClient, type WebhookEvent } from "@clerk/fastify";
+// // import { createUser } from "../services/user.service.js";
 
-// const authWebhook = fastifyPlugin(async (fastify) => {
-//   fastify.post(
-//     "/auth/webhook/clerk",
-//     {
-//       config: { rawBody: true },
-//     },
-//     async (req, reply) => {
-//       const svix_id = req.headers["svix-id"] as string;
-//       const svix_timestamp = req.headers["svix-timestamp"] as string;
-//       const svix_signature = req.headers["svix-signature"] as string;
+// // const authWebhook = fastifyPlugin(async (fastify) => {
+// //   fastify.post(
+// //     "/auth/webhook/clerk",
+// //     {
+// //       config: { rawBody: true },
+// //     },
+// //     async (req, reply) => {
+// //       const svix_id = req.headers["svix-id"] as string;
+// //       const svix_timestamp = req.headers["svix-timestamp"] as string;
+// //       const svix_signature = req.headers["svix-signature"] as string;
 
 //       if (!svix_id || !svix_timestamp || !svix_signature)
 //         return reply.status(400).send({ error: "Missing svix headers" });
@@ -21,16 +21,16 @@
 //       const wh = new Webhook(config.CLERK_SIGNING_SECRET);
 //       let event;
 
-//       try {
-//         event = wh.verify(req.rawBody as string, {
-//           "svix-id": svix_id,
-//           "svix-timestamp": svix_timestamp,
-//           "svix-signature": svix_signature,
-//         }) as WebhookEvent;
-//       } catch (error) {
-//         fastify.log.error(`Webhook verification failed: ${error}`);
-//         return reply.status(400).send({ error: "Invalid webhook signature" });
-//       }
+// //       try {
+// //         event = wh.verify(req.rawBody as string, {
+// //           "svix-id": svix_id,
+// //           "svix-timestamp": svix_timestamp,
+// //           "svix-signature": svix_signature,
+// //         }) as WebhookEvent;
+// //       } catch (error) {
+// //         fastify.log.error(`Webhook verification failed: ${error}`);
+// //         return reply.status(400).send({ error: "Invalid webhook signature" });
+// //       }
 
 //       if (event.type === "user.created" || event.type === "user.updated") {
 //         const {
@@ -72,4 +72,4 @@
 //   );
 // });
 
-// export default authWebhook;
+// // export default authWebhook;
