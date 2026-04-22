@@ -4,7 +4,6 @@ import { ArrowRight, Sparkles, Zap, Layers, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Logo, ProfileMenu } from "@/components/header-bits";
-import { saveDesign } from "@/lib/auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,10 +14,14 @@ export const Route = createFileRoute("/")({
         content:
           "Describe your system in plain English and watch Stitch draw a complete architecture diagram in seconds.",
       },
-      { property: "og:title", content: "Stitch — Prompt to system architecture diagram" },
+      {
+        property: "og:title",
+        content: "Stitch — Prompt to system architecture diagram",
+      },
       {
         property: "og:description",
-        content: "Built for developers and engineering managers. Generate high-level designs from a prompt.",
+        content:
+          "Built for developers and engineering managers. Generate high-level designs from a prompt.",
       },
     ],
   }),
@@ -40,30 +43,34 @@ function Landing() {
     const value = text.trim();
     if (!value) return;
     const id = crypto.randomUUID().slice(0, 8);
-    saveDesign({
-      id,
-      title: value.slice(0, 60),
-      prompt: value,
-      createdAt: Date.now(),
-    });
+
     navigate({ to: "/design/$designId", params: { designId: id } });
   }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       <div className="bg-grid-dots pointer-events-none absolute inset-0 opacity-40" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-120 bg-linear-to-b from-primary/10 via-transparent to-transparent" />
 
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <Logo />
         <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-          <Link to="/upgrade" className="transition-colors hover:text-foreground">
+          <Link
+            to="/upgrade"
+            className="transition-colors hover:text-foreground"
+          >
             Pricing
           </Link>
-          <a href="#features" className="transition-colors hover:text-foreground">
+          <a
+            href="#features"
+            className="transition-colors hover:text-foreground"
+          >
             Features
           </a>
-          <Link to="/dashboard" className="transition-colors hover:text-foreground">
+          <Link
+            to="/dashboard"
+            className="transition-colors hover:text-foreground"
+          >
             Dashboard
           </Link>
         </nav>
@@ -83,8 +90,8 @@ function Landing() {
           .
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
-          Stitch turns plain-English descriptions into high-level architecture diagrams — services,
-          databases, queues, and the arrows between them.
+          Stitch turns plain-English descriptions into high-level architecture
+          diagrams — services, databases, queues, and the arrows between them.
         </p>
 
         <form
@@ -144,7 +151,10 @@ function Landing() {
             body: "Export and share designs so engineers and managers stay aligned.",
           },
         ].map(({ icon: Icon, title, body }) => (
-          <div key={title} className="rounded-xl border border-border bg-card/60 p-5">
+          <div
+            key={title}
+            className="rounded-xl border border-border bg-card/60 p-5"
+          >
             <Icon className="mb-3 h-5 w-5 text-primary" />
             <h3 className="text-sm font-semibold">{title}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{body}</p>

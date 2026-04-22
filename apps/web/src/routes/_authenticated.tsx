@@ -1,5 +1,5 @@
+import { useAuth } from "@clerk/react";
 import { createFileRoute, Navigate, Outlet } from "@tanstack/react-router";
-import { useAuth } from "@/lib/auth";
 import { Loader2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -7,9 +7,9 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthenticatedLayout() {
-  const { user, loading } = useAuth();
+  const { isSignedIn, isLoaded } = useAuth();
 
-  if (loading) {
+  if (!isLoaded) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -17,7 +17,7 @@ function AuthenticatedLayout() {
     );
   }
 
-  if (!user) {
+  if (!isSignedIn) {
     return <Navigate to="/login" />;
   }
 

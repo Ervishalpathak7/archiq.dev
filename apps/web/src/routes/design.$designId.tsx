@@ -71,8 +71,8 @@ function archToFlow(
       ? []
       : arch.edges.map((e) => ({
           id: e.id,
-          source: e.source,
-          target: e.target,
+          source: e.sourceId,
+          target: e.targetId,
           label: e.label,
           animated: e.animated,
           type: "smoothstep",
@@ -93,7 +93,6 @@ function DesignPage() {
 
 function DesignInner() {
   const { designId } = Route.useParams();
-  const navigate = useNavigate();
   const [design, setDesign] = useState<DesignSummary | undefined>(undefined);
   const [title, setTitle] = useState("");
   const [paletteOpen, setPaletteOpen] = useState(true);

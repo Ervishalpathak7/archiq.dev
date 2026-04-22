@@ -8,7 +8,6 @@ import {
   CreditCard,
 } from "lucide-react";
 import { useTheme } from "@/lib/theme";
-import { useAuth, type Plan } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,6 +19,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { useAuth, useUser } from "@clerk/react";
+import { type Plan } from "@/types";
 
 const planStyles: Record<Plan, string> = {
   free: "bg-muted text-muted-foreground border border-border",
@@ -60,18 +61,20 @@ export function PlanBadge({ plan }: { plan: Plan }) {
 }
 
 export function ProfileMenu() {
-  const { user, signOut } = useAuth();
+  const { user, isSignedIn, isLoaded } = useUser();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
-  const initials = user?.name
-    ? user.name
-        .split(" ")
-        .map((p) => p[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase()
-    : "?";
 
-  if (!user) {
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <div className="h-8 w-24 animate-pulse rounded-full bg-muted" />{" "}
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
     return (
       <div className="flex items-center gap-2">
         <ThemeToggle />
@@ -85,25 +88,32 @@ export function ProfileMenu() {
     );
   }
 
+  const initials = user?.firstName
+    ? user.firstName.charAt(0).toUpperCase()
+    : "?";
+
+  const email = user.emailAddresses[0].emailAddress;
+  const plan = (user?.publicMetadata?.plan as Plan) ?? "free";
+
   return (
     <div className="flex items-center gap-2">
-      <ThemeToggle />
+      <ThemeToggle className="cursor-pointer" />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 rounded-full border border-border bg-card/60 py-1 pl-1 pr-3 transition-colors hover:bg-card">
+          <button className="flex items-center gap-2 rounded-full border border-border bg-card/60 py-1 pl-1 pr-3 transition-colors hover:bg-card cursor-pointer">
             <Avatar className="h-7 w-7">
               <AvatarFallback className="bg-primary/20 text-xs font-medium text-primary">
                 {initials}
               </AvatarFallback>
             </Avatar>
-            <PlanBadge plan={user.plan} />
+            <PlanBadge plan={plan} />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel className="flex flex-col">
-            <span className="text-sm font-medium">{user.name}</span>
+            <span className="text-sm font-medium">{user?.firstName}</span>
             <span className="text-xs font-normal text-muted-foreground">
-              {user.email}
+              {email}
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -141,11 +151,8 @@ export function ProfileMenu() {
 export function Logo({ className }: { className?: string }) {
   return (
     <Link to="/" className={cn("flex items-center gap-2", className)}>
-      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-linear-to-br from-primary to-amber-600 font-mono text-sm font-bold text-primary-foreground shadow-sm">
-        S
-      </span>
       <span className="font-mono text-sm font-semibold tracking-tight">
-        stitch
+        Archiq
       </span>
     </Link>
   );

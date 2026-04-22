@@ -8,7 +8,6 @@ import {
 
 import appCss from "../styles.css?url";
 import { ThemeProvider } from "@/lib/theme";
-import { AuthProvider } from "@/lib/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/react";
 
@@ -100,10 +99,8 @@ function RootComponent() {
   return (
     <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
       <ThemeProvider>
-        <AuthProvider>
-          <Outlet />
-          <Toaster />
-        </AuthProvider>
+        <Outlet />
+        <Toaster />
       </ThemeProvider>
     </ClerkProvider>
   );

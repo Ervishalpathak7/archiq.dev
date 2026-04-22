@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
+import { useAuth, useUser } from "@clerk/react";
+import { Plan } from "@/types";
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
@@ -23,18 +24,16 @@ export const Route = createFileRoute("/_authenticated/profile")({
 });
 
 function ProfilePage() {
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
-  const [name, setName] = useState(user?.name ?? "");
-  const [email, setEmail] = useState(user?.email ?? "");
+  const { user } = useUser();
+  const { signOut } = useAuth();
+  const [name, setName] = useState(user?.fullName ?? "");
+  const [email, setEmail] = useState(
+    user?.primaryEmailAddress?.emailAddress ?? "",
+  );
+  const plan = (user?.publicMetadata.plan as Plan) || "free";
 
   if (!user) return null;
-  const initials = user.name
-    .split(" ")
-    .map((p) => p[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+  const initials = user.firstName?.charAt(0).toUpperCase();
 
   function save(e: React.FormEvent) {
     e.preventDefault();
@@ -69,10 +68,10 @@ function ProfilePage() {
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <p className="font-medium">{user.name}</p>
-            <p className="text-xs text-muted-foreground">{user.email}</p>
+            <p className="font-medium">{name}</p>
+            <p className="text-xs text-muted-foreground">{email}</p>
           </div>
-          <PlanBadge plan={user.plan} />
+          <PlanBadge plan={plan} />
         </div>
 
         <form
@@ -106,7 +105,7 @@ function ProfilePage() {
           <p className="mt-1 text-sm text-muted-foreground">
             You are on the{" "}
             <span className="font-medium text-foreground">
-              {user.plan.toUpperCase()}
+              {plan.toUpperCase()}
             </span>{" "}
             plan.
           </p>
@@ -127,8 +126,9 @@ function ProfilePage() {
             size="sm"
             className="mt-3 gap-2"
             onClick={async () => {
-              await signOut();
-              navigate({ to: "/" });
+              await signOut({
+                redirectUrl: "/",
+              });
             }}
           >
             <LogOut className="h-4 w-4" /> Sign out

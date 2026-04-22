@@ -21,22 +21,23 @@ const app = Fastify({
   disableRequestLogging: true,
 });
 
-// Plugins
-app.register(helmet);
-app.register(fastifyRawBody, {
+// Plugins (order matters — later plugins may depend on earlier ones)
+await app.register(helmet);
+await app.register(fastifyRawBody, {
   global: false,
 });
-app.register(corsPlugin);
-app.register(clerk);
-app.register(authPlugin);
-app.register(cookiePlugin);
-app.register(prismaPlugin);
-app.register(aiPlugin);
+await app.register(corsPlugin);
+await app.register(cookiePlugin);
+await app.register(prismaPlugin);   // DB must be ready before auth plugin
+await app.register(clerk);          // Clerk SDK initialization
+await app.register(authPlugin);     // Auth middleware (needs prisma + clerk)
+await app.register(aiPlugin);
 
 // Routes
-app.register(healthRoutes);
-app.register(authWebhook);
-app.register(designRoutes);
+// Webhook must be registered separately — it does NOT use authenticate preHandler
+await app.register(authWebhook);
+await app.register(healthRoutes);
+await app.register(designRoutes);
 
 process.on("SIGINT", () => gracefullShutdown(app));
 process.on("SIGTERM", () => gracefullShutdown(app));

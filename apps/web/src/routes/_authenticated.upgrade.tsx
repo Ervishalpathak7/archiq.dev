@@ -2,15 +2,19 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Sparkles, ArrowLeft } from "lucide-react";
 import { Logo, ProfileMenu } from "@/components/header-bits";
 import { Button } from "@/components/ui/button";
-import { useAuth, type Plan } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Plan } from "@/types";
+import { useUser } from "@clerk/react";
 
 export const Route = createFileRoute("/_authenticated/upgrade")({
   head: () => ({
     meta: [
       { title: "Upgrade plan — Stitch" },
-      { name: "description", content: "Pick a Stitch plan that fits your workflow." },
+      {
+        name: "description",
+        content: "Pick a Stitch plan that fits your workflow.",
+      },
     ],
   }),
   component: UpgradePage,
@@ -29,7 +33,12 @@ const tiers: {
     name: "Free",
     price: "$0",
     period: "forever",
-    features: ["10 designs / month", "Public sharing", "Basic component palette", "Community support"],
+    features: [
+      "10 designs / month",
+      "Public sharing",
+      "Basic component palette",
+      "Community support",
+    ],
   },
   {
     id: "pro",
@@ -62,7 +71,7 @@ const tiers: {
 ];
 
 function UpgradePage() {
-  const { user, setPlan } = useAuth();
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -85,7 +94,9 @@ function UpgradePage() {
             <Sparkles className="h-3 w-3 text-primary" />
             Pricing
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Pick a plan</h1>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            Pick a plan
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Start free. Upgrade as your team grows.
           </p>
@@ -93,13 +104,15 @@ function UpgradePage() {
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {tiers.map((t) => {
-            const current = user?.plan === t.id;
+            const current = (user?.publicMetadata.plan as Plan) === t.id;
             return (
               <div
                 key={t.id}
                 className={cn(
                   "relative rounded-2xl border bg-card/60 p-6",
-                  t.highlight ? "border-primary/50 shadow-xl shadow-primary/10" : "border-border",
+                  t.highlight
+                    ? "border-primary/50 shadow-xl shadow-primary/10"
+                    : "border-border",
                 )}
               >
                 {t.highlight && (
@@ -110,7 +123,9 @@ function UpgradePage() {
                 <h3 className="text-lg font-semibold">{t.name}</h3>
                 <div className="mt-2 flex items-end gap-1">
                   <span className="text-3xl font-semibold">{t.price}</span>
-                  <span className="pb-1 text-xs text-muted-foreground">{t.period}</span>
+                  <span className="pb-1 text-xs text-muted-foreground">
+                    {t.period}
+                  </span>
                 </div>
                 <ul className="mt-6 space-y-2">
                   {t.features.map((f) => (
@@ -125,8 +140,7 @@ function UpgradePage() {
                   variant={t.highlight ? "default" : "outline"}
                   disabled={current}
                   onClick={() => {
-                    setPlan(t.id);
-                    toast.success(`Switched to ${t.name} plan (demo)`);
+                    toast.info(`Plan Switching Not working for now `);
                   }}
                 >
                   {current ? "Current plan" : `Switch to ${t.name}`}
@@ -137,7 +151,8 @@ function UpgradePage() {
         </div>
 
         <p className="mt-10 text-center text-xs text-muted-foreground">
-          Plans are switchable in this demo to preview the badge — no real billing.
+          Plans are switchable in this demo to preview the badge — no real
+          billing.
         </p>
       </main>
     </div>
